@@ -18,8 +18,34 @@
     <h2>Welcome to teacher o matic</h2>
     <p>Enter your user name in the header</p>
 </div>
-
-    
+<template id="repoCardTemplate">
+  <article class="card">
+    <table>
+      <thead>
+        <tr>
+          <td>
+            <h3 class="repoName"></h3>
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <p class="repoForks">
+              Show Forks
+            </p>
+            <a class="repoGHLink" href="">
+              Show on GitHub
+            </a>
+          </td>
+          <td>
+            <p class="repoNumberOfForks"></p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </article>
+</template>
 </body>
 <script src="./js/main.js"></script>
 <!-- Compiled and minified JavaScript -->
