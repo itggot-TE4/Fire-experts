@@ -8,6 +8,11 @@ Dotenv.load
 
 # Webserver handler
 class Server < Sinatra::Base
+  # Serves the page
+  get '/' do
+    return File.read('./public/index.html')
+  end
+
   get '/api/github/:name/repos' do
     response = HTTParty.get("https://api.github.com/users/#{params['name']}/repos")
     return response.body.to_json
