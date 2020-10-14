@@ -1,33 +1,116 @@
-[![Actions Status](https://github.com/itggot-TE4/TE4/workflows/tests/badge.svg)](https://github.com/itggot-TE4/Yala/actions)
-# TE4
-Template project for projects at TE4. 
+<p align="center">
+  <a href="" rel="noopener">
+ <!-- <img width=200px height=200px src="https://i.imgur.com/6wj0hh6.jpg" alt="Project logo"></a> -->
+</p>
 
-Replace this with a description for the project. Remember to update the above template badge.
+<h3 align="center">Teacher-O-Matic</h3>
 
-## Project management setup
-- Use projects tab for adding kanban boards for issue tracking and bug triage board.
-- Use issues and labels for assigning points to tasks and categorizing tasks.
+<div align="center">
 
-## Code review
-Code review is the process that happens after a new pull request is created and before the changes are merged to develop. It's a powerful tool for knowledge transfer. Use the following guidelines as a reference: https://github.com/thoughtbot/guides/tree/master/code-review
+[![Status](https://img.shields.io/github/workflow/status/itggot-TE4/Fire-experts/tests/master?label=Tests%20Master&style=for-the-badge&branch=dev)]()
+[![Status](https://img.shields.io/github/workflow/status/itggot-TE4/Fire-experts/tests/dev?label=Tests%20Dev&style=for-the-badge&branch=master)]()
+[![GitHub Issues](https://img.shields.io/github/issues/itggot-TE4/Fire-experts.svg?style=for-the-badge)](https://github.com/itggot-TE4/Fire-experts/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/itggot-TE4/Fire-experts.svg?style=for-the-badge)](https://github.com/itggot-TE4/Fire-experts/pulls)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)](/LICENSE)
 
-## Documentation
-Self-documenting code is something to aim for. Types are the simplest and best documentation, improve legibility due to their well-defined meaning, and are checked at compile time<sup>1</sup>. For more high-level documentation about application code, one can choose to use tools such as [JSDoc](https://jsdoc.app/) or [docsify.js](https://docsify.js.org). Use the gh-pages to provide this documentation for other developers and users: https://itggot-te4.github.io/TE4/
+</div>
 
-## Testing
-Every developer has heard of how useful tests are but to actually think in a TDD manner is something entirely different. Consider the different types of tests: https://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.html
+---
 
+<p align="center"> Teacher-O-Matic is a program that with the help of the GitHub API let's teachers easily see, comment, and review a students code.
+    <br> 
+</p>
 
-## Code quality
-There are several tools that can be integrated into the CI pipeline. One of those tools can be used to monitor code quality. [Code climate](https://codeclimate.com/quality/) is a free application which has support for finding duplicated code and can be setup to reinfore a certain codestyle.
+## 📝 Table of Contents
 
-Another tool that can be used in the CI pipeline is [Semmle QL / LGTM](https://lgtm.com) for automatic security checks on new pull requests.
+- [About](#about)
+- [Getting Started](#getting_started)
+- [Deployment](#deployment)
+- [Usage](#usage)
+- [Built Using](#built_using)
+- [TODO](../TODO.md)
+- [Contributing](../CONTRIBUTING.md)
+- [Authors](#authors)
+- [Acknowledgments](#acknowledgement)
 
+## 🧐 About <a name = "about"></a>
 
-## Git flow
-- Don't push to master, use a develop branch
-- https://nvie.com/posts/a-successful-git-branching-model/
-- https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
+Write about 1-2 paragraphs describing the purpose of your project.
 
-<sup>1</sup>: [ioscpp guidelines](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md).  
-<sup>2</sup>: https://thoughtbot.com/playbook/developing/refactoring
+## 🏁 Getting Started <a name = "getting_started"></a>
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
+
+### Prerequisites
+
+What things you need to install the software and how to install them.
+
+```
+Ruby
+Node
+```
+
+### Installing
+
+A step by step series of examples that tell you how to get a development env running.
+
+Say what the step will be
+
+```
+Give the example
+```
+
+And repeat
+
+```
+until finished
+```
+
+End with an example of getting some data out of the system or using it for a little demo.
+
+## 🔧 Running the tests <a name = "tests"></a>
+
+Explain how to run the automated tests for this system.
+
+### Break down into end to end tests
+
+Explain what these tests test and why
+
+```
+Give an example
+```
+
+### And coding style tests
+
+Explain what these tests test and why
+
+```
+Give an example
+```
+
+## 🎈 Usage <a name="usage"></a>
+
+Add notes about how to use the system.
+
+## 🚀 Deployment <a name = "deployment"></a>
+
+Add additional notes about how to deploy this on a live system.
+
+## ⛏️ Built Using <a name = "built_using"></a>
+
+- [MongoDB](https://www.mongodb.com/) - Database
+- [Express](https://expressjs.com/) - Server Framework
+- [VueJs](https://vuejs.org/) - Web Framework
+- [NodeJs](https://nodejs.org/en/) - Server Environment
+
+## ✍️ Authors <a name = "authors"></a>
+
+- [@kylelobo](https://github.com/kylelobo) - Idea & Initial work
+
+See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors) who participated in this project.
+
+## 🎉 Acknowledgements <a name = "acknowledgement"></a>
+
+- Hat tip to anyone whose code was used
+- Inspiration
+- References
