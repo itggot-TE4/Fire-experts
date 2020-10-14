@@ -1,36 +1,36 @@
-function QS(element,target) {
+function QS (element, target) {
   return element.querySelector(target)
 }
 
-function QSA(element,target) {
+function QSA (element, target) {
   return element.querySelectorAll(target)
 }
 
-function cloneTemplate(templateID, templateContent) {
-  let template = QS(document,templateID)    
-  let clone = template.content.cloneNode(true)
-  return QS(clone,templateContent)
+function cloneTemplate (templateID, templateContent) {
+  const template = QS(document, templateID)
+  const clone = template.content.cloneNode(true)
+  return QS(clone, templateContent)
 }
 
-function resetWrapper() {QS(document, `.wrapper`).innerHTML = ``}
+function resetWrapper () { QS(document, '.wrapper').innerHTML = '' }
 
-function appendToWrapper(listOfElements) {
-  let wrapper = QS(document, `.wrapper`)
-  listOfElements.forEach(element => {wrapper.appendChild(element)})
+function appendToWrapper (listOfElements) {
+  const wrapper = QS(document, '.wrapper')
+  listOfElements.forEach(element => { wrapper.appendChild(element) })
 }
 
-function generateRepoCard(repoList) {
-  let cardTemplate = cloneTemplate(`#repoCardTemplate`, `.card`)
-  let cardList = []
+function generateRepoCard (repoList) {
+  const cardTemplate = cloneTemplate('#repoCardTemplate', '.card')
+  const cardList = []
   repoList.forEach(repo => {
-    let card = cardTemplate.cloneNode(true)
-    let repoForks = QS(card, `.repoForks`)
-    repoForks.setAttribute(`repoFullName`, repo.fullName)
-    repoForks.addEventListener(`click`, tempfunction)
-    QS(card, `.repoName`).innerText = repo.name
-    QS(card, `.repoGHLink`).href = repo.GHLink
-    QS(card, `.repoNumberOfForks`).innerText = repo.numberOfForks
-    cardList.push(card)   
+    const card = cardTemplate.cloneNode(true)
+    const repoForks = QS(card, '.repoForks')
+    repoForks.setAttribute('repoFullName', repo.fullName)
+    repoForks.addEventListener('click', tempfunction)
+    QS(card, '.repoName').innerText = repo.name
+    QS(card, '.repoGHLink').href = repo.GHLink
+    QS(card, '.repoNumberOfForks').innerText = repo.numberOfForks
+    cardList.push(card)
   })
-return cardList
+  return cardList
 }
