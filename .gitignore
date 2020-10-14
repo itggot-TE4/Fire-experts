@@ -3,4 +3,7 @@ coverage/
 cover/
 .DS_Store
 .vscode/settings.json
+<<<<<<< HEAD
 .env
+=======
+>>>>>>> Added wrapper/header style
