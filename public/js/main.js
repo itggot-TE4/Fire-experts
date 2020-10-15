@@ -1,14 +1,9 @@
 document.querySelector('#for').addEventListener('submit', async (e) => {
   e.preventDefault()
   const input = e.target.querySelector('input').value
-  let data
-  let response
-  try {
-    response = await fetch(`/api/github/${input}/repos`)
-    data = await response.json()
-    return null
-  } catch (error) { alert('Connection to server lost!') }
-  if (data.message === 'Not Found' || response.status !== 200) {
+  const data = await getRepos(input)
+  console.log(data)
+  if (data.message === 'Not Found') {
     alert('No user with that name boy!')
     return null
   }
@@ -86,3 +81,20 @@ function tempfunction (e) {
   console.log(e)
   console.log('this is temp function')
 }
+
+async function fetchJSON (url) {
+  try {
+    const temp = await fetch(url)
+    const response = await temp.json()
+    if (temp.status !== 200) {
+      return `The server responded with a status code of ${temp.status}`
+    }
+    return response
+  } catch (error) {
+    return `The following error message was returned: ${error}`
+  }
+}
+
+async function getRepos (userName) { return await fetchJSON(`/api/github/${userName}/repos`) }
+
+async function getForks (userRepo) { return await fetchJSON(`/api/github/${userRepo}/forks`) }
