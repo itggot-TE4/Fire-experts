@@ -14,12 +14,19 @@ class Server < Sinatra::Base
   end
 
   get '/api/github/:name/repos' do
-    response = HTTParty.get("https://api.github.com/users/#{params['name']}/repos")
-    return response.body.to_json
+    call_gh_api("https://api.github.com/users/#{params['name']}/repos").body.to_json
   end
 
   get '/api/github/:name/:repo/forks' do
-    response = HTTParty.get("https://api.github.com/repos/#{params['name']}/#{params['repo']}/forks")
-    return response.body.to_json
+    call_gh_api("https://api.github.com/repos/#{params['name']}/#{params['repo']}/forks").body.to_json
+  end
+
+  def call_gh_api(url)
+    auth = {
+      username: ENV['GH_USER_NAME'],
+      token: ENV['GH_ACCESS_TOKEN']
+    }
+    options = { basic_auth: auth }
+    HTTParty.get(url, options)
   end
 end
