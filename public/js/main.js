@@ -118,8 +118,6 @@ async function generateForkCards (forkList) {
 }
 
 async function getCodeSnippet (forkFullName) {
-  forkFullName = 'TE4-oskar-pilborg/smallest_of_two'
-
   const manifest = await fetchJSON(`https://raw.githubusercontent.com/${forkFullName}/master/.manifest.json`)
 
   const codeSnippetPromise = await fetch(`https://raw.githubusercontent.com/${forkFullName}/master/${manifest.filePath}`)
