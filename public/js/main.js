@@ -141,14 +141,18 @@ async function fetchJSON (url) {
     const temp = await fetch(url)
     const response = await temp.json()
     if (temp.status !== 200) {
-      return `The server responded with a status code of ${temp.status}`
+      const message = `The server responded with a status code of ${temp.status}`
+      console.log(message)
+      return message
     }
     return response
   } catch (error) {
-    return `The following error message was returned: ${error}`
+    const message = `The following error message was returned: ${error}`
+    console.log(message)
+    return message
   }
 }
 
 async function getRepos (userName) { return await fetchJSON(`/api/github/${userName}/repos`) }
 
-async function getForks (userRepo) { return await fetchJSON(`/api/github/${userRepo}/forks`) }
+// async function getForks (userRepo) { return await fetchJSON(`/api/github/${userRepo}/forks`) }
