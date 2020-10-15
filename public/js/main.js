@@ -1,15 +1,12 @@
 document.querySelector('#for').addEventListener('submit', async (e) => {
   e.preventDefault()
   const input = e.target.querySelector('input').value
-  let data
-  let response
-  try {
-    response = await fetch(`/api/github/${input}/repos`)
-    data = await response.json()
-    return null
-  } catch (error) { alert('Connection to server lost!') }
-  if (data.message === 'Not Found' || response.status !== 200) {
+  const data = await getRepos(input)
+  if (data.message === 'Not Found') {
     alert('No user with that name boy!')
+    return null
+  } else if (typeof data === 'string') {
+    alert('Connection to server was terminated.')
     return null
   }
   const parseRepo = parseRepoData(data)
@@ -68,7 +65,29 @@ function generateRepoCard (repoList) {
   })
   return cardList
 }
+
 function tempfunction (e) {
   console.log(e)
-  console.log('this is temp funvtion')
+  console.log('this is temp function')
 }
+
+async function fetchJSON (url) {
+  try {
+    const temp = await fetch(url)
+    const response = await temp.json()
+    if (temp.status !== 200) {
+      const message = `The server responded with a status code of ${temp.status}`
+      console.log(message)
+      return message
+    }
+    return response
+  } catch (error) {
+    const message = `The following error message was returned: ${error}`
+    console.log(message)
+    return message
+  }
+}
+
+async function getRepos (userName) { return await fetchJSON(`/api/github/${userName}/repos`) }
+
+// async function getForks (userRepo) { return await fetchJSON(`/api/github/${userRepo}/forks`) }
