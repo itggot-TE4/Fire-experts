@@ -66,11 +66,6 @@ function generateRepoCard (repoList) {
   return cardList
 }
 
-function tempfunction (e) {
-  console.log(e)
-  console.log('this is temp function')
-}
-
 async function fetchJSON (url) {
   try {
     const temp = await fetch(url)
