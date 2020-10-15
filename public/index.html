@@ -58,6 +58,35 @@
     </table>
   </article>
 </template>
+<template id="forkCardTemplate">
+  <article class="card">
+    <div class="forkCardUpper">
+      <h3></h3>
+      <div class="codeSnippet"></div>
+      <a href="" class="forkGHLink">Show on GithHub</a>
+      <div class="testResults"></div>
+    </div>
+    <form action="#" class="forkForm">
+      <input type="text" class="forkComment" placeholder="Comment"> </input>
+      <p>
+        <label>
+          <input class="opacity1" type="radio" name="forkRadio" id="done">Done</input>
+        </label>
+      </p>
+      <p>
+        <label>
+          <input class="opacity1" type="radio" name="forkRadio" id="reviewNeeded">Needs Change</input>
+        </label>
+      </p>
+      <p>
+        <label>
+          <input class="opacity1" type="radio" name="forkRadio" id="notReviewed" checked>Not reviewed</input>
+        </label>
+      </p>
+      <button type="submit">Save</button>
+    </form>
+  </article>
+</template>
 </body>
 <script src="./js/main.js"></script>
 <!-- Compiled and minified JavaScript -->
