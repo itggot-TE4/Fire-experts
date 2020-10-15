@@ -25,11 +25,7 @@
 
 - [About](#about)
 - [Getting Started](#getting_started)
-- [Deployment](#deployment)
-- [Usage](#usage)
 - [Built Using](#built_using)
-- [TODO](../TODO.md)
-- [Contributing](../CONTRIBUTING.md)
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgement)
 
@@ -39,78 +35,59 @@ Write about 1-2 paragraphs describing the purpose of your project.
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them.
+Required software to get up and running.
 
 ```
-Ruby
-Node
+Ruby > 2.6.x
+Node > 14.9.x
 ```
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running.
-
-Say what the step will be
+To get started do the following
 
 ```
-Give the example
+Clone this repository
 ```
 
-And repeat
+then run
 
 ```
-until finished
+$ npm install
 ```
 
-End with an example of getting some data out of the system or using it for a little demo.
+and to start the server run 
+
+```
+$ rackup
+```
+
+The server should now be served on port 9292 unless otherwise specified.
 
 ## 🔧 Running the tests <a name = "tests"></a>
 
-Explain how to run the automated tests for this system.
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## 🎈 Usage <a name="usage"></a>
-
-Add notes about how to use the system.
-
-## 🚀 Deployment <a name = "deployment"></a>
-
-Add additional notes about how to deploy this on a live system.
+To run ESlint use ```` npm run lint ``` <br>
+To run test use ```` npm run test ```
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 
-- [MongoDB](https://www.mongodb.com/) - Database
-- [Express](https://expressjs.com/) - Server Framework
-- [VueJs](https://vuejs.org/) - Web Framework
-- [NodeJs](https://nodejs.org/en/) - Server Environment
+- [Sinatra](http://sinatrarb.com/) - Server Framework
+- [VueJs](https://materializecss.com/) - Style, Scripting Framework
+- [NodeJs](https://nodejs.org/en/) - Testing Enviroment
 
 ## ✍️ Authors <a name = "authors"></a>
 
-- [@kylelobo](https://github.com/kylelobo) - Idea & Initial work
+- [@te4-adrian-almetun-smeds](https://github.com/te4-adrian-almetun-smeds)
+- [@te4-andre-skvarc](https://github.com/te4-andre-skvarc)
+- [@te4-david-jensen](https://github.com/te4-david-jensen)
+- [@te4-tintin-wihlborg](https://github.com/te4-tintin-wihlborg)
 
 See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors) who participated in this project.
 
 ## 🎉 Acknowledgements <a name = "acknowledgement"></a>
 
-- Hat tip to anyone whose code was used
-- Inspiration
-- References
+- Hats off to anyone whose code was used
