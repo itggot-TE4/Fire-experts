@@ -135,3 +135,20 @@ function loadSyntaxHighlighting (card) {
   // eslint-disable-next-line no-undef
   hljs.highlightBlock(card)
 }
+
+async function fetchJSON (url) {
+  try {
+    const temp = await fetch(url)
+    const response = await temp.json()
+    if (temp.status !== 200) {
+      return `The server responded with a status code of ${temp.status}`
+    }
+    return response
+  } catch (error) {
+    return `The following error message was returned: ${error}`
+  }
+}
+
+async function getRepos (userName) { return await fetchJSON(`/api/github/${userName}/repos`) }
+
+async function getForks (userRepo) { return await fetchJSON(`/api/github/${userRepo}/forks`) }
