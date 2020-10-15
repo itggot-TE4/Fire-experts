@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="./css/main.css" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+     <!--Import Google Icon Font-->
+     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+     
+</head>
+<body>
+    <header class="card-panel red lighten-3">
+        <form id="for">
+            <div class="row">
+                <div class="col s2">
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <i class="material-icons prefix" type="submit" >account_box</i>
+                      <input type="text" placeholder="Enter Username">
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </form>
+    </header>
+<div class="wrapper">
+    <h2 class="container">Welcome to Teacher-o-Matic!</h2>
+    <p class="container">Enter your GitHub username in the header field</p>
+</div>
+<template id="repoCardTemplate">
+  <article class="card">
+    <table>
+      <thead>
+        <tr>
+          <td>
+            <h3 class="repoName"></h3>
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <p class="repoForks">
+              Show Forks
+            </p>
+            <a class="repoGHLink" href="">
+              Show on GitHub
+            </a>
+          </td>
+          <td>
+            <p class="repoNumberOfForks"></p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </article>
+</template>
+</body>
+<script src="./js/main.js"></script>
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</html>

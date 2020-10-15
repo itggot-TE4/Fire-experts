@@ -1,37 +1,103 @@
-[![Actions Status](https://github.com/itggot-TE4/TE4/workflows/tests/badge.svg)](https://github.com/itggot-TE4/Yala/actions)
-# TE4
-Template project for projects at TE4. 
+<p align="center">
+  <a href="" rel="noopener">
+ <!-- <img width=200px height=200px src="https://i.imgur.com/6wj0hh6.jpg" alt="Project logo"></a> -->
+</p>
 
-Replace this with a description for the project. Remember to update the above template badge.
+<h3 align="center">Teacher-O-Matic</h3>
 
-## Project management setup
-- Use projects tab for adding kanban boards for issue tracking and bug triage board.
-- Use issues and labels for assigning points to tasks and categorizing tasks.
+<div align="center">
 
-## Code review
-Code review is the process that happens after a new pull request is created and before the changes are merged to develop. It's a powerful tool for knowledge transfer. Use the following guidelines as a reference: https://github.com/thoughtbot/guides/tree/master/code-review
+[![Status](https://img.shields.io/github/workflow/status/itggot-TE4/Fire-experts/tests/master?label=Tests%20Master&style=for-the-badge&branch=dev)]()
+[![Status](https://img.shields.io/github/workflow/status/itggot-TE4/Fire-experts/tests/dev?label=Tests%20Dev&style=for-the-badge&branch=master)]()
+[![GitHub Issues](https://img.shields.io/github/issues/itggot-TE4/Fire-experts.svg?style=for-the-badge)](https://github.com/itggot-TE4/Fire-experts/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/itggot-TE4/Fire-experts.svg?style=for-the-badge)](https://github.com/itggot-TE4/Fire-experts/pulls)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)](/LICENSE)
 
-## Documentation
-Self-documenting code is something to aim for. Types are the simplest and best documentation, improve legibility due to their well-defined meaning, and are checked at compile time<sup>1</sup>. For more high-level documentation about application code, one can choose to use tools such as [JSDoc](https://jsdoc.app/) or [docsify.js](https://docsify.js.org). Use the gh-pages to provide this documentation for other developers and users: https://itggot-te4.github.io/TE4/
+</div>
 
-## Testing
-Every developer has heard of how useful tests are but to actually think in a TDD manner is something entirely different. Consider the different types of tests: https://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.html
+---
 
-## Continious integration
-Every commit that is pushed to the remote should be free of syntax errors and should still pass the "build" phase + basic tests. To reinforce testing into an application a CI pipeline is put in place to check every commit and even update reports for code coverage or automatic merging of code. [Github actions](https://github.com/features/actions) is one of the simplest solutions to this. Update the .github/workflows yaml files for the project specific configuration. 
+<p align="center"> Teacher-O-Matic is a program that with the help of the GitHub API let's teachers easily see, comment, and review a students code.
+    <br> 
+</p>
 
-## Code quality
-There are several tools that can be integrated into the CI pipeline. One of those tools can be used to monitor code quality. [Code climate](https://codeclimate.com/quality/) is a free application which has support for finding duplicated code and can be setup to reinfore a certain codestyle.
+## 📝 Table of Contents
 
-Another tool that can be used in the CI pipeline is [Semmle QL / LGTM](https://lgtm.com) for automatic security checks on new pull requests.
+- [About](#about)
+- [Getting Started](#getting_started)
+- [Built Using](#built_using)
+- [Authors](#authors)
+- [Acknowledgments](#acknowledgement)
 
-## Refactoring
-Refactoring is the process of improving the design of existing code without altering its external behavior. It's a critical step in the process, but often overlooked <sup>2</sup>. This should be part of a strong code review culture on any serious project.
+## 🧐 About <a name = "about"></a>
 
-## Git flow
-- Don't push to master, use a develop branch
-- https://nvie.com/posts/a-successful-git-branching-model/
-- https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
+Write about 1-2 paragraphs describing the purpose of your project.
 
-<sup>1</sup>: [ioscpp guidelines](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md).  
-<sup>2</sup>: https://thoughtbot.com/playbook/developing/refactoring
+## 🏁 Getting Started <a name = "getting_started"></a>
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites
+
+Required software to get up and running.
+
+```
+Ruby > 2.6.x
+Node > 14.9.x
+```
+
+You will also need a GitHub account.
+
+### Installing
+
+To get started do the following
+
+```
+Clone this repository
+```
+
+then run
+
+```
+$ npm install
+```
+
+and to start the server run 
+
+```
+$ rackup
+```
+
+The server should now be served on port 9292 unless otherwise specified.
+
+To make the application work as inteded you will also need to add a ```.env``` file with the following content.
+Replace XXX with the GitHub accesstoken and your GitHub username
+
+```
+GH_ACCESS_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXX
+GH_USER_NAME=XXXXXXXXXXXXX
+```
+
+## 🔧 Running the tests <a name = "tests"></a>
+
+To run ESlint use ```` npm run lint ``` <br>
+To run test use ```` npm run test ```
+
+## ⛏️ Built Using <a name = "built_using"></a>
+
+- [Sinatra](http://sinatrarb.com/) - Server Framework
+- [VueJs](https://materializecss.com/) - Style, Scripting Framework
+- [NodeJs](https://nodejs.org/en/) - Testing Enviroment
+
+## ✍️ Authors <a name = "authors"></a>
+
+- [@te4-adrian-almetun-smeds](https://github.com/te4-adrian-almetun-smeds)
+- [@te4-andre-skvarc](https://github.com/te4-andre-skvarc)
+- [@te4-david-jensen](https://github.com/te4-david-jensen)
+- [@te4-tintin-wihlborg](https://github.com/te4-tintin-wihlborg)
+
+See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors) who participated in this project.
+
+## 🎉 Acknowledgements <a name = "acknowledgement"></a>
+
+- Hats off to anyone whose code was used
