@@ -1,24 +1,12 @@
 document.querySelector('#for').addEventListener('submit', async (e) => {
   e.preventDefault()
   const input = e.target.querySelector('input').value
-<<<<<<< HEAD
   const data = await getRepos(input)
   if (data.message === 'Not Found') {
     alert('No user with that name boy!')
     return null
   } else if (typeof data === 'string') {
     alert('Connection to server was terminated.')
-=======
-  let data
-  let response
-  try {
-    response = await fetch(`/api/github/${input}/repos`)
-    data = await response.json()
-    return null
-  } catch (error) { alert('Connection to server lost!') }
-  if (data.message === 'Not Found' || response.status !== 200) {
-    alert('No user with that name boy!')
->>>>>>> Added feauture, when input is given. Cards is generated
     return null
   }
   const parseRepo = parseRepoData(data)
@@ -100,6 +88,22 @@ async function fetchJSON (url) {
   }
 }
 
+<<<<<<< HEAD
 async function getRepos (userName) { return await fetchJSON(`/api/github/${userName}/repos`) }
 
 // async function getForks (userRepo) { return await fetchJSON(`/api/github/${userRepo}/forks`) }
+=======
+async function fetchJSON (url) {
+  try {
+    const temp = await fetch(url)
+    const response = await temp.json()
+    return response
+  } catch (error) {
+    return `The following error message was returned: ${error}`
+  }
+}
+
+async function getRepos (userName) { return await fetchJSON(`/api/github/${userName}/repos`) }
+
+async function getForks (userRepo) { return await fetchJSON(`/api/github/${userRepo}/forks`) }
+>>>>>>> Fixed #38 Allow for fetching data from backend
