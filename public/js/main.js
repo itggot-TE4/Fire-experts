@@ -88,22 +88,6 @@ async function fetchJSON (url) {
   }
 }
 
-<<<<<<< HEAD
 async function getRepos (userName) { return await fetchJSON(`/api/github/${userName}/repos`) }
 
 // async function getForks (userRepo) { return await fetchJSON(`/api/github/${userRepo}/forks`) }
-=======
-async function fetchJSON (url) {
-  try {
-    const temp = await fetch(url)
-    const response = await temp.json()
-    return response
-  } catch (error) {
-    return `The following error message was returned: ${error}`
-  }
-}
-
-async function getRepos (userName) { return await fetchJSON(`/api/github/${userName}/repos`) }
-
-async function getForks (userRepo) { return await fetchJSON(`/api/github/${userRepo}/forks`) }
->>>>>>> Fixed #38 Allow for fetching data from backend
