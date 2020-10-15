@@ -126,7 +126,6 @@ async function getCodeSnippet (forkFullName) {
   const codeSnippet = await codeSnippetPromise.text()
   codeSnippet.trim()
 
-
   return codeSnippet
 }
 
