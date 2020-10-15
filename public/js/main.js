@@ -1,12 +1,24 @@
 document.querySelector('#for').addEventListener('submit', async (e) => {
   e.preventDefault()
   const input = e.target.querySelector('input').value
+<<<<<<< HEAD
   const data = await getRepos(input)
   if (data.message === 'Not Found') {
     alert('No user with that name boy!')
     return null
   } else if (typeof data === 'string') {
     alert('Connection to server was terminated.')
+=======
+  let data
+  let response
+  try {
+    response = await fetch(`/api/github/${input}/repos`)
+    data = await response.json()
+    return null
+  } catch (error) { alert('Connection to server lost!') }
+  if (data.message === 'Not Found' || response.status !== 200) {
+    alert('No user with that name boy!')
+>>>>>>> Added feauture, when input is given. Cards is generated
     return null
   }
   const parseRepo = parseRepoData(data)
