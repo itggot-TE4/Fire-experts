@@ -1,10 +1,30 @@
+document.querySelector('#for').addEventListener('submit', async (e) => {
+  e.preventDefault()
+  const input = e.target.querySelector('input').value
+  let data
+  let response
+  try {
+    response = await fetch(`/api/github/${input}/repos`)
+    data = await response.json()
+    return null
+  } catch (error) { alert('Connection to server lost!') }
+  if (data.message === 'Not Found' || response.status !== 200) {
+    alert('No user with that name boy!')
+    return null
+  }
+  const parseRepo = parseRepoData(data)
+  const repoCards = generateRepoCard(parseRepo)
+  resetWrapper()
+  appendToWrapper(repoCards)
+})
+
 function QS (element, target) {
   return element.querySelector(target)
 }
 
-function QSA (element, target) {
-  return element.querySelectorAll(target)
-}
+// function QSA (element, target) {
+//   return element.querySelectorAll(target)
+// }
 
 function cloneTemplate (templateID, templateContent) {
   const template = QS(document, templateID)
@@ -47,4 +67,8 @@ function generateRepoCard (repoList) {
     cardList.push(card)
   })
   return cardList
+}
+function tempfunction (e) {
+  console.log(e)
+  console.log('this is temp funvtion')
 }
