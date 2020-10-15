@@ -19,15 +19,14 @@ function appendToWrapper (listOfElements) {
   listOfElements.forEach(element => { wrapper.appendChild(element) })
 }
 
-
 function parseRepoData (repoData) {
-  let parsedData = []
+  const parsedData = []
   repoData.forEach(repo => {
-    let parsedRepo = {
-      "name":`${repo.name}`,
-      "fullName":`${repo.full_name}`,
-      "GHLink":`${repo.html_url}`,
-      "numberOfForks":`${repo.forks}`
+    const parsedRepo = {
+      name: `${repo.name}`,
+      fullName: `${repo.full_name}`,
+      GHLink: `${repo.html_url}`,
+      numberOfForks: `${repo.forks}`
     }
     parsedData.push(parsedRepo)
   })
