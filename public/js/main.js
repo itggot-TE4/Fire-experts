@@ -56,14 +56,22 @@ function generateRepoCard (repoList) {
   repoList.forEach(repo => {
     const card = cardTemplate.cloneNode(true)
     const repoForks = QS(card, '.repoForks')
-    repoForks.setAttribute('repoFullName', repo.fullName)
-    repoForks.addEventListener('click', tempfunction)
+    repoForks.setAttribute('data-repo-full-name', repo.fullName)
+    repoForks.addEventListener('click', showForks)
     QS(card, '.repoName').innerText = repo.name
     QS(card, '.repoGHLink').href = repo.GHLink
     QS(card, '.repoNumberOfForks').innerText = repo.numberOfForks
     cardList.push(card)
   })
   return cardList
+}
+
+async function showForks (e) {
+  const fullName = e.target.getAttribute('data-repo-full-name')
+  const data = await getForks(fullName)
+  const cards = generateForkCards(data)
+  resetWrapper()
+  appendToWrapper(cards)
 }
 
 async function fetchJSON (url) {
@@ -85,4 +93,4 @@ async function fetchJSON (url) {
 
 async function getRepos (userName) { return await fetchJSON(`/api/github/${userName}/repos`) }
 
-// async function getForks (userRepo) { return await fetchJSON(`/api/github/${userRepo}/forks`) }
+async function getForks (userRepo) { return await fetchJSON(`/api/github/${userRepo}/forks`) }
