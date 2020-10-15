@@ -19,6 +19,21 @@ function appendToWrapper (listOfElements) {
   listOfElements.forEach(element => { wrapper.appendChild(element) })
 }
 
+
+function parseRepoData (repoData) {
+  let parsedData = []
+  repoData.forEach(repo => {
+    let parsedRepo = {
+      "name":`${repo.name}`,
+      "fullName":`${repo.full_name}`,
+      "GHLink":`${repo.html_url}`,
+      "numberOfForks":`${repo.forks}`
+    }
+    parsedData.push(parsedRepo)
+  })
+  return parsedData
+}
+
 function generateRepoCard (repoList) {
   const cardTemplate = cloneTemplate('#repoCardTemplate', '.card')
   const cardList = []
