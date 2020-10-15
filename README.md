@@ -46,6 +46,8 @@ Ruby > 2.6.x
 Node > 14.9.x
 ```
 
+You will also need a GitHub account.
+
 ### Installing
 
 To get started do the following
@@ -67,6 +69,14 @@ $ rackup
 ```
 
 The server should now be served on port 9292 unless otherwise specified.
+
+To make the application work as inteded you will also need to add a ```.env``` file with the following content.
+Replace XXX with the GitHub accesstoken and your GitHub username
+
+```
+GH_ACCESS_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXX
+GH_USER_NAME=XXXXXXXXXXXXX
+```
 
 ## 🔧 Running the tests <a name = "tests"></a>
 
