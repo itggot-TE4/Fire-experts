@@ -1,4 +1,4 @@
-document.querySelector('#for').addEventListener('submit', async (e) => {
+QS(document, '#for').addEventListener('submit', async (e) => {
   e.preventDefault()
   const input = e.target.querySelector('input').value
   const data = await getRepos(input)
