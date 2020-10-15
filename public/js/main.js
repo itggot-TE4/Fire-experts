@@ -94,48 +94,44 @@ async function getRepos (userName) { return await fetchJSON(`/api/github/${userN
 async function getForks (userRepo) { return await fetchJSON(`/api/github/${userRepo}/forks`) }
 
 async function generateForkCards (forkList) {
-
   resetWrapper()
-  
+
   const cardTemplate = cloneTemplate('#forkCardTemplate', '.card')
-  
+
   await forkList.forEach(async fork => {
-    let card = cardTemplate.cloneNode(true)
-    
+    const card = cardTemplate.cloneNode(true)
+
     for (let i = 0; i < 3; i++) {
-      let testResults = document.createElement('p')
+      const testResults = document.createElement('p')
       testResults.textContent = `fake test result number ${i} :shipit:`
-      QS(card,'.testResults').appendChild(testResults)
+      QS(card, '.testResults').appendChild(testResults)
     }
-    
-    QS(card,'h3').textContent = fork.full_name
-    let thing = await getCodeSnippet(fork.full_name)
-    QS(card,'code').textContent = thing
-    QS(card,'.forkGHLink').href = fork.html_url
-    
+
+    QS(card, 'h3').textContent = fork.full_name
+    const thing = await getCodeSnippet(fork.full_name)
+    QS(card, 'code').textContent = thing
+    QS(card, '.forkGHLink').href = fork.html_url
+
     appendToWrapper([card])
     loadSyntaxHighlighting(QS(card, 'pre code'))
   })
-  
-  
 }
 
 async function getCodeSnippet (forkFullName) {
-  
-  forkFullName = "TE4-oskar-pilborg/smallest_of_two"
-  
-  let manifest = await fetchJSON(`https://raw.githubusercontent.com/${forkFullName}/master/.manifest.json`)
-  
-  let codeSnippetPromise = await fetch(`https://raw.githubusercontent.com/${forkFullName}/master/${manifest.filePath}`)
-  let codeSnippet = await codeSnippetPromise.text()
+  forkFullName = 'TE4-oskar-pilborg/smallest_of_two'
+
+  const manifest = await fetchJSON(`https://raw.githubusercontent.com/${forkFullName}/master/.manifest.json`)
+
+  const codeSnippetPromise = await fetch(`https://raw.githubusercontent.com/${forkFullName}/master/${manifest.filePath}`)
+  const codeSnippet = await codeSnippetPromise.text()
   codeSnippet.trim()
 
   console.log(codeSnippet)
-  
-  return codeSnippet  
-  
+
+  return codeSnippet
 }
 
 function loadSyntaxHighlighting (card) {
+  // eslint-disable-next-line no-undef
   hljs.highlightBlock(card)
 }
