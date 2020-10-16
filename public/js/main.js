@@ -116,6 +116,7 @@ async function generateForkCards (forkList) {
       QS(card, 'code').textContent = codeSnippet
       QS(card, 'code').classList.add(manifest.language)
       QS(card, '.forkGHLink').href = fork.html_url
+      QS(card, 'form').addEventListener('submit', commentSubmit)
 
       appendToWrapper([card])
       loadSyntaxHighlighting(QS(card, 'pre code'))
@@ -139,4 +140,15 @@ async function getCodeSnippet (forkFullName, branch = 'master') {
 function loadSyntaxHighlighting (card) {
   // eslint-disable-next-line no-undef
   hljs.highlightBlock(card)
+}
+// A function that takes the target element and appends it to the comment section
+function commentSubmit (e) {
+  const commentList = e.target.parentElement.querySelector('.forkform')
+  e.preventDefault()
+  const com = QS(e.target, 'input').value
+  localStorage.setItem('comment', com)
+  const render = localStorage.getItem('comment')
+  const comment = document.createElement('p')
+  comment.textContent = render
+  commentList.parentElement.insertBefore(comment, commentList)
 }
