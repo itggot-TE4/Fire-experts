@@ -4,9 +4,7 @@ on: [push]
 
 jobs:
   unit-tests:
-
     runs-on: ubuntu-latest
-    
     steps:
     - uses: actions/checkout@v1
     - name: Run all unit tests
@@ -17,10 +15,6 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Check for linting
-      run: |
-        echo Run lint
-        npm install
-        npm run lint
-
+      - uses: actions/checkout@v1
+      - name: Lint Code Base
+        uses: github/super-linter@v3
