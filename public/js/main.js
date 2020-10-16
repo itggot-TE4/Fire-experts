@@ -110,6 +110,8 @@ async function generateForkCards (forkList) {
     QS(card, 'h3').textContent = fork.full_name
     const thing = await getCodeSnippet(fork.full_name)
     QS(card, 'code').textContent = thing
+    const manifest = await getManifest(fork.full_name)
+    QS(card, 'code').classList.add(manifest.language)
     QS(card, '.forkGHLink').href = fork.html_url
 
     appendToWrapper([card])
@@ -117,9 +119,12 @@ async function generateForkCards (forkList) {
   })
 }
 
-async function getCodeSnippet (forkFullName) {
-  const manifest = await fetchJSON(`https://raw.githubusercontent.com/${forkFullName}/master/.manifest.json`)
+async function getManifest (forkFullName) {
+  return await fetchJSON(`https://raw.githubusercontent.com/${forkFullName}/master/.manifest.json`)
+}
 
+async function getCodeSnippet (forkFullName) {
+  const manifest = await getManifest(forkFullName)
   const codeSnippetPromise = await fetch(`https://raw.githubusercontent.com/${forkFullName}/master/${manifest.filePath}`)
   const codeSnippet = await codeSnippetPromise.text()
   codeSnippet.trim()
