@@ -113,11 +113,6 @@ async function generateForkCards (forkList) {
         codeSnippet = 'No code here!\nThe given manifest.filePath returned no file.'
       }
       QS(card, 'h3').textContent = fork.full_name
-      if (codeSnippet === '404: Not Found') {
-        codeSnippet = 'No code here!\nThe given manifest.filePath returned no file.'
-      }
-
-      QS(card, 'h3').textContent = fork.full_name
       QS(card, 'code').textContent = codeSnippet
       const manifest = await getManifest(fork.full_name)
       QS(card, 'code').classList.add(manifest.language)
