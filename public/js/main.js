@@ -155,3 +155,15 @@ function commentSubmit (e) {
   comment.textContent = render
   commentList.parentElement.insertBefore(comment, commentList)
 }
+
+async function initializer () {
+  const data = await fetchJSON('/api/github/user')
+  console.log(data)
+  if (data.message !== 'Bad credentials') {
+    QS(QS(document, '#for'), 'input').value = data.login
+    QS(document, '#for').dispatchEvent(new Event('submit'))
+    QS(QS(document, '#for'), 'input').value = ''
+  }
+}
+
+initializer()
