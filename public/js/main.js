@@ -19,9 +19,9 @@ function QS (element, target) {
   return element.querySelector(target)
 }
 
-function QSA (element, target) {
-  return element.querySelectorAll(target)
-}
+// function QSA (element, target) {
+//   return element.querySelectorAll(target)
+// }
 
 function cloneTemplate (templateID, templateContent) {
   const template = QS(document, templateID)
@@ -136,18 +136,14 @@ function loadSyntaxHighlighting (card) {
   // eslint-disable-next-line no-undef
   hljs.highlightBlock(card)
 }
-
-
-
-function commentSubmit (e){
- const commentList = document.querySelector('.forkform')
+// A function that takes the target element and appends it to the comment section
+function commentSubmit (e) {
+  const commentList = e.target.parentElement.querySelector('.forkform')
   e.preventDefault()
   const com = QS(e.target, 'input').value
   localStorage.setItem('comment', com)
   const render = localStorage.getItem('comment')
-  let comment = document.createElement('p')
+  const comment = document.createElement('p')
   comment.textContent = render
   commentList.parentElement.insertBefore(comment, commentList)
-
-
-} 
+}
