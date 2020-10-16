@@ -10,7 +10,7 @@ QS(document, '#for').addEventListener('submit', async (e) => {
     return null
   }
   const parseRepo = parseRepoData(data)
-  const repoCards = generateRepoCard(parseRepo)
+  const repoCards = generateRepoCards(parseRepo)
   resetWrapper()
   appendToWrapper(repoCards)
 })
@@ -50,25 +50,26 @@ function parseRepoData (repoData) {
   return parsedData
 }
 
-function generateRepoCard (repoList) {
+function generateRepoCards (repoList) {
   const cardTemplate = cloneTemplate('#repoCardTemplate', '.card')
   const cardList = []
   repoList.forEach(repo => {
     const card = cardTemplate.cloneNode(true)
     const repoForks = QS(card, '.repoForks')
-    repoForks.setAttribute('repoFullName', repo.fullName)
-    repoForks.addEventListener('click', tempfunction)
-    QS(card, '.repoName').innerText = repo.name
+    repoForks.setAttribute('data-repo-full-name', repo.fullName)
+    repoForks.addEventListener('click', showForks)
+    QS(card, '.repoName').textContent = repo.name
     QS(card, '.repoGHLink').href = repo.GHLink
-    QS(card, '.repoNumberOfForks').innerText = repo.numberOfForks
+    QS(card, '.repoNumberOfForks').textContent = repo.numberOfForks
     cardList.push(card)
   })
   return cardList
 }
 
-function tempfunction (e) {
-  console.log(e)
-  console.log('this is temp function')
+async function showForks (e) {
+  const fullName = e.target.getAttribute('data-repo-full-name')
+  const data = await getForks(fullName)
+  generateForkCards(data)
 }
 
 async function fetchJSON (url) {
@@ -90,4 +91,65 @@ async function fetchJSON (url) {
 
 async function getRepos (userName) { return await fetchJSON(`/api/github/${userName}/repos`) }
 
-// async function getForks (userRepo) { return await fetchJSON(`/api/github/${userRepo}/forks`) }
+async function getForks (userRepo) { return await fetchJSON(`/api/github/${userRepo}/forks`) }
+
+async function generateForkCards (forkList) {
+  resetWrapper()
+
+  const cardTemplate = cloneTemplate('#forkCardTemplate', '.card')
+
+  await forkList.forEach(async fork => {
+    const card = cardTemplate.cloneNode(true)
+    const manifest = await getManifest(fork.full_name, fork.default_branch)
+    let codeSnippet = await getCodeSnippet(fork.full_name, fork.default_branch)
+
+    if (typeof manifest.language === 'string' || typeof manifest.filePath === 'string') {
+      for (let i = 0; i < 3; i++) {
+        const testResults = document.createElement('p')
+        testResults.textContent = `fake test result number ${i}`
+        QS(card, '.testResults').appendChild(testResults)
+      }
+      if (codeSnippet === '404: Not Found') {
+        codeSnippet = 'No code here!\nThe given manifest.filePath returned no file.'
+      }
+      QS(card, 'h3').textContent = fork.full_name
+      QS(card, 'code').textContent = codeSnippet
+      QS(card, 'code').classList.add(manifest.language)
+      QS(card, '.forkGHLink').href = fork.html_url
+      QS(card, 'form').addEventListener('submit', commentSubmit)
+
+      appendToWrapper([card])
+      loadSyntaxHighlighting(QS(card, 'pre code'))
+    }
+  })
+}
+
+async function getManifest (forkFullName, branch = 'master') {
+  return await fetchJSON(`https://raw.githubusercontent.com/${forkFullName}/${branch}/.manifest.json`)
+}
+
+async function getCodeSnippet (forkFullName, branch = 'master') {
+  const manifest = await getManifest(forkFullName)
+  const codeSnippetPromise = await fetch(`https://raw.githubusercontent.com/${forkFullName}/${branch}/${manifest.filePath}`)
+  const codeSnippet = await codeSnippetPromise.text()
+  codeSnippet.trim()
+
+  return codeSnippet
+}
+
+function loadSyntaxHighlighting (card) {
+  // eslint-disable-next-line no-undef
+  hljs.highlightBlock(card)
+}
+
+// A function that takes the target element and appends it to the comment section
+function commentSubmit (e) {
+  const commentList = e.target.parentElement.querySelector('.forkform')
+  e.preventDefault()
+  const com = QS(e.target, 'input').value
+  localStorage.setItem('comment', com)
+  const render = localStorage.getItem('comment')
+  const comment = document.createElement('p')
+  comment.textContent = render
+  commentList.parentElement.insertBefore(comment, commentList)
+}

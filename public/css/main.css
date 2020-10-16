@@ -1,8 +1,23 @@
-header{
-    margin: 0 !important;
+header {
+  margin: 0 !important;
 }
 
 .card-panel {
-    padding: 12px !important;
-    padding-bottom: 0px !important;
+  padding: 12px !important;
+  padding-bottom: 0 !important;
+}
+
+h3 {
+  font-size: 1.5em !important;
+}
+
+.row .col.s4 {
+  height: 17em !important;
+}
+
+.repoForks {
+    cursor: pointer;
+}
+.row .col.s6{
+    padding: 10px !important;
 }

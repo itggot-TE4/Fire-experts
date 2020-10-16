@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Teacher-o-Matic</title>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <link href="./css/main.css" rel="stylesheet">
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
      <!--Import Google Icon Font-->
      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-     
+     <!-- hljs-style -->
+     <link rel="stylesheet" href="css/styles/monokai.css">
 </head>
 <body>
     <header class="card-panel red lighten-3">
@@ -26,12 +28,12 @@
               </div>
         </form>
     </header>
-<div class="wrapper">
+<div class="wrapper row container">
     <h2 class="container">Welcome to Teacher-o-Matic!</h2>
     <p class="container">Enter your GitHub username in the header field</p>
 </div>
 <template id="repoCardTemplate">
-  <article class="card">
+  <article class="card col s4" >
     <table>
       <thead>
         <tr>
@@ -42,7 +44,7 @@
       </thead>
       <tbody>
         <tr>
-          <td>
+          <td class="section">
             <p class="repoForks">
               Show Forks
             </p>
@@ -58,8 +60,48 @@
     </table>
   </article>
 </template>
+<template id="forkCardTemplate">
+  <article class="card col s6">
+    <div class="forkCardUpper container ">
+      <h3></h3>
+      <div class="codeSnippet">
+        <pre>
+          <code>
+            <!-- code will go here -->
+          </code>
+        </pre>
+      </div>
+      <a href="" class="forkGHLink">Show on GithHub</a>
+      <div class="testResults"></div>
+    </div>
+    <form action="#" class="forkform container">
+      <input type="text" class="forkcomment" placeholder="Comment"></input>
+      <button type="submit">Submit Comment</button>
+    </form>
+    <form action="#" class="radioform">
+      <p>
+        <label>
+          <input type="radio" name="forkRadio" id="done"><span>Done</span></input>
+        </label>
+      </p>
+      <p>
+        <label>
+          <input type="radio" name="forkRadio" id="reviewNeeded"><span>Needs Change</span></input>
+        </label>
+      </p>
+      <p>
+        <label>
+          <input type="radio" name="forkRadio" id="notReviewed" checked><span>Not reviewed</span></input>
+        </label>
+      </p>
+      <button class="waves-effect waves-light btn-small" type="submit">Save</button>
+    </form>
+  </article>
+</template>
 </body>
 <script src="./js/main.js"></script>
 <!-- Compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<!-- hljs-script -->
+<script src="js/highlight.pack.js"></script>
 </html>

@@ -4,9 +4,7 @@ on: [push]
 
 jobs:
   unit-tests:
-
     runs-on: ubuntu-latest
-    
     steps:
     - uses: actions/checkout@v1
     - name: Run all unit tests
@@ -17,10 +15,13 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Check for linting
-      run: |
-        echo Run lint
-        npm install
-        npm run lint
-
+      - uses: actions/checkout@v1
+      - name: Lint Code Base
+        uses: github/super-linter@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUBY_CONFIG_FILE: .rubocop.yml
+          VALIDATE_MARKDOWN: false
+          VALIDATE_JAVASCRIPT_STANDARD: false
+          VALIDATE_HTML: false
+          LINTER_RULES_PATH: ./
