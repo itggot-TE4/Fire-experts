@@ -1,6 +1,5 @@
 env:
   browser: true
-  es2021: true
 extends:
   - standard
 parserOptions:
@@ -9,3 +8,4 @@ parserOptions:
 rules: {
   indent: ["error", 2]
 }
+ignorePatterns: ["**/highlight.pack.js"]
