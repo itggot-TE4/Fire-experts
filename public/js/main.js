@@ -58,7 +58,7 @@ function generateRepoCards (repoList) {
     const repoForks = QS(card, '.repoForks')
     repoForks.setAttribute('data-repo-full-name', repo.fullName)
     repoForks.addEventListener('click', showForks)
-    QS(card, '.repoName').innerText = repo.name
+    QS(card, '.repoName').textContent = repo.name
     QS(card, '.repoGHLink').href = repo.GHLink
     QS(card, '.repoNumberOfForks').textContent = repo.numberOfForks
     cardList.push(card)
@@ -101,7 +101,7 @@ async function generateForkCards (forkList) {
   await forkList.forEach(async fork => {
     const card = cardTemplate.cloneNode(true)
     const manifest = await getManifest(fork.full_name, fork.default_branch)
-    const codeSnippet = await getCodeSnippet(fork.full_name, fork.default_branch)
+    let codeSnippet = await getCodeSnippet(fork.full_name, fork.default_branch)
 
     if (typeof manifest.language === 'string' || typeof manifest.filePath === 'string') {
       for (let i = 0; i < 3; i++) {
@@ -109,7 +109,9 @@ async function generateForkCards (forkList) {
         testResults.textContent = `fake test result number ${i}`
         QS(card, '.testResults').appendChild(testResults)
       }
-
+      if (codeSnippet === '404: Not Found') {
+        codeSnippet = 'No code here!\nThe given manifest.filePath returned no file.'
+      }
       QS(card, 'h3').textContent = fork.full_name
       QS(card, 'code').textContent = codeSnippet
       QS(card, 'code').classList.add(manifest.language)
