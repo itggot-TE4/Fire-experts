@@ -142,23 +142,14 @@ function loadSyntaxHighlighting (card) {
   hljs.highlightBlock(card)
 }
 
-async function fetchJSON (url) {
-  try {
-    const temp = await fetch(url)
-    const response = await temp.json()
-    if (temp.status !== 200) {
-      const message = `The server responded with a status code of ${temp.status}`
-      console.log(message)
-      return message
-    }
-    return response
-  } catch (error) {
-    const message = `The following error message was returned: ${error}`
-    console.log(message)
-    return message
-  }
+// A function that takes the target element and appends it to the comment section
+function commentSubmit (e) {
+  const commentList = e.target.parentElement.querySelector('.forkform')
+  e.preventDefault()
+  const com = QS(e.target, 'input').value
+  localStorage.setItem('comment', com)
+  const render = localStorage.getItem('comment')
+  const comment = document.createElement('p')
+  comment.textContent = render
+  commentList.parentElement.insertBefore(comment, commentList)
 }
-
-async function getRepos (userName) { return await fetchJSON(`/api/github/${userName}/repos`) }
-
-// async function getForks (userRepo) { return await fetchJSON(`/api/github/${userRepo}/forks`) }
