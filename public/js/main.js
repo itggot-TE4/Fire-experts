@@ -106,7 +106,7 @@ async function generateForkCards (forkList) {
     if (typeof manifest.language === 'string' || typeof manifest.filePath === 'string') {
       for (let i = 0; i < 3; i++) {
         const testResults = document.createElement('p')
-        testResults.textContent = `fake test result number ${i} :shipit:`
+        testResults.textContent = `fake test result number ${i}`
         QS(card, '.testResults').appendChild(testResults)
       }
 
