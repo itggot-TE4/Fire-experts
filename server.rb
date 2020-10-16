@@ -12,6 +12,7 @@ class Server < Sinatra::Base
 
   # Serves the page
   get '/' do
+    @client_id = ENV['GH_BASIC_CLIENT_ID']
     slim :index
   end
 
