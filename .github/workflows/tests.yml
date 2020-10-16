@@ -21,3 +21,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUBY_CONFIG_FILE: .rubocop.yml
+          VALIDATE_MARKDOWN: false
+          VALIDATE_HTML: false
