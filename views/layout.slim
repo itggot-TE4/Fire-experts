@@ -1,0 +1,29 @@
+doctype html
+html lang="en" 
+  head
+    meta charset="UTF-8" /
+    meta content="width=device-width, initial-scale=1.0" name="viewport" /
+    title Teacher-o-Matic
+    link href="img/favicon.ico" rel=("shortcut icon") type="image/x-icon" /
+    link href="./css/main.css" rel="stylesheet" /
+    /! Compiled and minified CSS
+    link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet" /
+    /! Import Google Icon Font
+    link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" /
+    /! hljs-style
+    link href="css/styles/monokai.css" rel="stylesheet" /
+  body
+    header.card-panel.red.lighten-3
+      div.right
+        a.github.waves-effect.waves-light.white.btn href="https://github.com/login/oauth/authorize?client_id=dcca2dac25f7a8362830" 
+      form#for
+        .row
+          .col.s5
+            .row
+              .input-field.col.s12
+                i.material-icons.prefix type="submit"  account_box
+                input placeholder=("Enter Username") type="text" /
+    .progress.hide
+      .indeterminate
+
+    == yield
