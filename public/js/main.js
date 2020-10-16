@@ -114,7 +114,6 @@ async function generateForkCards (forkList) {
       }
       QS(card, 'h3').textContent = fork.full_name
       QS(card, 'code').textContent = codeSnippet
-      const manifest = await getManifest(fork.full_name)
       QS(card, 'code').classList.add(manifest.language)
       QS(card, '.forkGHLink').href = fork.html_url
 
