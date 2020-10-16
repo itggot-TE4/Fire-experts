@@ -101,7 +101,7 @@ async function generateForkCards (forkList) {
   await forkList.forEach(async fork => {
     const card = cardTemplate.cloneNode(true)
     const manifest = await getManifest(fork.full_name, fork.default_branch)
-    const thing = await getCodeSnippet(fork.full_name, fork.default_branch)
+    const codeSnippet = await getCodeSnippet(fork.full_name, fork.default_branch)
 
     if (typeof manifest.language === 'string' || typeof manifest.filePath === 'string') {
       for (let i = 0; i < 3; i++) {
