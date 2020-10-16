@@ -100,8 +100,8 @@ async function generateForkCards (forkList) {
 
   await forkList.forEach(async fork => {
     const card = cardTemplate.cloneNode(true)
-    const manifest = await getManifest(fork.full_name)
-    const thing = await getCodeSnippet(fork.full_name)
+    const manifest = await getManifest(fork.full_name, fork.default_branch)
+    const thing = await getCodeSnippet(fork.full_name, fork.default_branch)
 
     if (typeof manifest.language === 'string' || typeof manifest.filePath === 'string') {
       for (let i = 0; i < 3; i++) {
@@ -121,13 +121,13 @@ async function generateForkCards (forkList) {
   })
 }
 
-async function getManifest (forkFullName) {
-  return await fetchJSON(`https://raw.githubusercontent.com/${forkFullName}/master/.manifest.json`)
+async function getManifest (forkFullName, branch = 'master') {
+  return await fetchJSON(`https://raw.githubusercontent.com/${forkFullName}/${branch}/.manifest.json`)
 }
 
-async function getCodeSnippet (forkFullName) {
+async function getCodeSnippet (forkFullName, branch = 'master') {
   const manifest = await getManifest(forkFullName)
-  const codeSnippetPromise = await fetch(`https://raw.githubusercontent.com/${forkFullName}/master/${manifest.filePath}`)
+  const codeSnippetPromise = await fetch(`https://raw.githubusercontent.com/${forkFullName}/${branch}/${manifest.filePath}`)
   const codeSnippet = await codeSnippetPromise.text()
   codeSnippet.trim()
 
