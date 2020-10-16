@@ -100,22 +100,24 @@ async function generateForkCards (forkList) {
 
   await forkList.forEach(async fork => {
     const card = cardTemplate.cloneNode(true)
-
-    for (let i = 0; i < 3; i++) {
-      const testResults = document.createElement('p')
-      testResults.textContent = `fake test result number ${i} :shipit:`
-      QS(card, '.testResults').appendChild(testResults)
-    }
-
-    QS(card, 'h3').textContent = fork.full_name
-    const thing = await getCodeSnippet(fork.full_name)
-    QS(card, 'code').textContent = thing
     const manifest = await getManifest(fork.full_name)
-    QS(card, 'code').classList.add(manifest.language)
-    QS(card, '.forkGHLink').href = fork.html_url
+    const thing = await getCodeSnippet(fork.full_name)
 
-    appendToWrapper([card])
-    loadSyntaxHighlighting(QS(card, 'pre code'))
+    if (typeof manifest.language === 'string' || typeof manifest.filePath === 'string') {
+      for (let i = 0; i < 3; i++) {
+        const testResults = document.createElement('p')
+        testResults.textContent = `fake test result number ${i} :shipit:`
+        QS(card, '.testResults').appendChild(testResults)
+      }
+
+      QS(card, 'h3').textContent = fork.full_name
+      QS(card, 'code').textContent = thing
+      QS(card, 'code').classList.add(manifest.language)
+      QS(card, '.forkGHLink').href = fork.html_url
+
+      appendToWrapper([card])
+      loadSyntaxHighlighting(QS(card, 'pre code'))
+    }
   })
 }
 
