@@ -141,6 +141,7 @@ function loadSyntaxHighlighting (card) {
   // eslint-disable-next-line no-undef
   hljs.highlightBlock(card)
 }
+
 // A function that takes the target element and appends it to the comment section
 function commentSubmit (e) {
   const commentList = e.target.parentElement.querySelector('.forkform')

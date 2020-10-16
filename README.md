@@ -49,7 +49,6 @@ Node > 14.9.x
 You will also need a GitHub account.
 
 ### Installing
-
 To get started do the following
 
 ```
