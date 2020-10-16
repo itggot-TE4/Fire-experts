@@ -100,11 +100,23 @@ async function generateForkCards (forkList) {
 
   await forkList.forEach(async fork => {
     const card = cardTemplate.cloneNode(true)
+    const manifest = await getManifest(fork.full_name, fork.default_branch)
+    const codeSnippet = await getCodeSnippet(fork.full_name, fork.default_branch)
 
-    for (let i = 0; i < 3; i++) {
-      const testResults = document.createElement('p')
-      testResults.textContent = `fake test result number ${i} :shipit:`
-      QS(card, '.testResults').appendChild(testResults)
+    if (typeof manifest.language === 'string' || typeof manifest.filePath === 'string') {
+      for (let i = 0; i < 3; i++) {
+        const testResults = document.createElement('p')
+        testResults.textContent = `fake test result number ${i}`
+        QS(card, '.testResults').appendChild(testResults)
+      }
+
+      QS(card, 'h3').textContent = fork.full_name
+      QS(card, 'code').textContent = codeSnippet
+      QS(card, 'code').classList.add(manifest.language)
+      QS(card, '.forkGHLink').href = fork.html_url
+
+      appendToWrapper([card])
+      loadSyntaxHighlighting(QS(card, 'pre code'))
     }
 
     QS(card, 'h3').textContent = fork.full_name
@@ -119,13 +131,13 @@ async function generateForkCards (forkList) {
   })
 }
 
-async function getManifest (forkFullName) {
-  return await fetchJSON(`https://raw.githubusercontent.com/${forkFullName}/master/.manifest.json`)
+async function getManifest (forkFullName, branch = 'master') {
+  return await fetchJSON(`https://raw.githubusercontent.com/${forkFullName}/${branch}/.manifest.json`)
 }
 
-async function getCodeSnippet (forkFullName) {
+async function getCodeSnippet (forkFullName, branch = 'master') {
   const manifest = await getManifest(forkFullName)
-  const codeSnippetPromise = await fetch(`https://raw.githubusercontent.com/${forkFullName}/master/${manifest.filePath}`)
+  const codeSnippetPromise = await fetch(`https://raw.githubusercontent.com/${forkFullName}/${branch}/${manifest.filePath}`)
   const codeSnippet = await codeSnippetPromise.text()
   codeSnippet.trim()
 
