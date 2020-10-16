@@ -18,7 +18,8 @@ class Server < Sinatra::Base
   end
 
   get '/api/github/:name/:repo/forks' do
-    call_gh_api("https://api.github.com/repos/#{params['name']}/#{params['repo']}/forks").body
+    call_gh_api("https://api.github.com/repos/#{params['name']}/" \
+              "#{params['repo']}/forks").body
   end
 
   def call_gh_api(url)
