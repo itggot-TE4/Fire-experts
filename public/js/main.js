@@ -114,20 +114,11 @@ async function generateForkCards (forkList) {
       QS(card, 'code').textContent = codeSnippet
       QS(card, 'code').classList.add(manifest.language)
       QS(card, '.forkGHLink').href = fork.html_url
+      QS(card, 'form').addEventListener('submit', commentSubmit)
 
       appendToWrapper([card])
       loadSyntaxHighlighting(QS(card, 'pre code'))
     }
-
-    QS(card, 'h3').textContent = fork.full_name
-    const thing = await getCodeSnippet(fork.full_name)
-    QS(card, 'code').textContent = thing
-    const manifest = await getManifest(fork.full_name)
-    QS(card, 'code').classList.add(manifest.language)
-    QS(card, '.forkGHLink').href = fork.html_url
-    QS(card, 'form').addEventListener('submit', commentSubmit)
-    appendToWrapper([card])
-    loadSyntaxHighlighting(QS(card, 'pre code'))
   })
 }
 
