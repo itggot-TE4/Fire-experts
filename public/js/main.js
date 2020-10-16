@@ -75,18 +75,22 @@ async function showForks (e) {
 }
 
 async function fetchJSON (url) {
+  QS(document, '.progress').classList.remove('hide')
   try {
     const temp = await fetch(url)
     const response = await temp.json()
     if (temp.status !== 200) {
       const message = `The server responded with a status code of ${temp.status}`
       console.log(message)
+      QS(document, '.progress').classList.add('hide')
       return message
     }
+    QS(document, '.progress').classList.add('hide')
     return response
   } catch (error) {
     const message = `The following error message was returned: ${error}`
     console.log(message)
+    QS(document, '.progress').classList.add('hide')
     return message
   }
 }
