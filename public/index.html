@@ -60,8 +60,8 @@
   </article>
 </template>
 <template id="forkCardTemplate">
-  <article class="card">
-    <div class="forkCardUpper">
+  <article class="card col s6">
+    <div class="forkCardUpper container ">
       <h3></h3>
       <div class="codeSnippet">
         <pre>
@@ -73,7 +73,7 @@
       <a href="" class="forkGHLink">Show on GithHub</a>
       <div class="testResults"></div>
     </div>
-    <form action="#" class="forkform">
+    <form action="#" class="forkform container">
       <input type="text" class="forkcomment" placeholder="Comment"></input>
       <button type="submit">Submit Comment</button>
     </form>
@@ -93,7 +93,7 @@
           <input type="radio" name="forkRadio" id="notReviewed" checked><span>Not reviewed</span></input>
         </label>
       </p>
-      <button type="submit">Save</button>
+      <button class="waves-effect waves-light btn-small" type="submit">Save</button>
     </form>
   </article>
 </template>
