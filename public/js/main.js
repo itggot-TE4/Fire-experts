@@ -19,9 +19,9 @@ function QS (element, target) {
   return element.querySelector(target)
 }
 
-function QSA (element, target) {
-  return element.querySelectorAll(target)
-}
+// function QSA (element, target) {
+//   return element.querySelectorAll(target)
+// }
 
 function cloneTemplate (templateID, templateContent) {
   const template = QS(document, templateID)
