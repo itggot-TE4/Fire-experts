@@ -1,3 +1,4 @@
 {
-  "ignoreFiles": ["**/*.js", "**/monokai.css"]
+  "extends": "stylelint-config-recommended",
+  "ignoreFiles": ["**/*.js", "**/monokai.css", "./node_modules/*"]
 }
