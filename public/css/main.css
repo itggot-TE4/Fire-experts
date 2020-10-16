@@ -14,3 +14,7 @@ h3 {
 .row .col.s4 {
   height: 17em !important;
 }
+
+.repoForks{
+    cursor:pointer;
+}
