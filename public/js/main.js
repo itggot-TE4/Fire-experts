@@ -1,4 +1,6 @@
-QS(document, '#for').addEventListener('submit', async (e) => {
+QS(document, '#for').addEventListener('submit', headerFormSubmit)
+
+async function headerFormSubmit (e) {
   e.preventDefault()
   const input = e.target.querySelector('input').value
   const data = await getRepos(input)
@@ -13,7 +15,7 @@ QS(document, '#for').addEventListener('submit', async (e) => {
   const repoCards = generateRepoCards(parseRepo)
   resetWrapper()
   appendToWrapper(repoCards)
-})
+}
 
 function QS (element, target) {
   return element.querySelector(target)
