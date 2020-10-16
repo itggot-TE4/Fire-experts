@@ -117,9 +117,10 @@ async function generateForkCards (forkList) {
       const manifest = await getManifest(fork.full_name)
       QS(card, 'code').classList.add(manifest.language)
       QS(card, '.forkGHLink').href = fork.html_url
+
+      appendToWrapper([card])
+      loadSyntaxHighlighting(QS(card, 'pre code'))
     }
-    appendToWrapper([card])
-    loadSyntaxHighlighting(QS(card, 'pre code'))
   })
 }
 
