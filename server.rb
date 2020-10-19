@@ -24,13 +24,14 @@ class Server < Sinatra::Base
   end
   # Calls the get route with your Username and token key,
   # then gets the name from the input field in the
-  # headerfield and makes a request to the github api to find the repository, and then
-  # looks for existing forks bounded to the github username.
+  # headerfield and makes a request to the github api to find the repository,
+  # and then looks for existing forks bounded to the github username.
   get '/api/github/:name/:repo/forks' do
     call_gh_api("https://api.github.com/repos/#{params['name']}/" \
               "#{params['repo']}/forks").body
   end
-  # A get route that gets the users "github username" and then uses it for the resquest to get
+  # A get route that gets the users "github username" and then
+  # uses it for the resquest to get
   # the repositorys from the "Username"
   get '/api/github/user' do
     response = call_gh_api('https://api.github.com/user')
