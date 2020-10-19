@@ -183,6 +183,7 @@ async function getCodeSnippet (forkFullName, branch = 'master') {
   // Gets the raw file content from a path provided in .manifest.json
   const codeSnippetPromise = await fetch(`https://raw.githubusercontent.com/${forkFullName}/${branch}/${manifest.filePath}`)
   const codeSnippet = await codeSnippetPromise.text()
+  codeSnippet.trim()
 
   return codeSnippet
 }
