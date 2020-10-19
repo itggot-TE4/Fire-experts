@@ -1,4 +1,6 @@
-QS(document, '#for').addEventListener('submit', async (e) => {
+QS(document, '#for').addEventListener('submit', headerFormSubmit)
+
+async function headerFormSubmit (e) {
   e.preventDefault()
   const input = e.target.querySelector('input').value
   const data = await getRepos(input)
@@ -13,7 +15,7 @@ QS(document, '#for').addEventListener('submit', async (e) => {
   const repoCards = generateRepoCards(parseRepo)
   resetWrapper()
   appendToWrapper(repoCards)
-})
+}
 
 function QS (element, target) {
   return element.querySelector(target)
@@ -73,18 +75,22 @@ async function showForks (e) {
 }
 
 async function fetchJSON (url) {
+  QS(document, '.progress').classList.remove('hide')
   try {
     const temp = await fetch(url)
     const response = await temp.json()
     if (temp.status !== 200) {
       const message = `The server responded with a status code of ${temp.status}`
       console.log(message)
+      QS(document, '.progress').classList.add('hide')
       return message
     }
+    QS(document, '.progress').classList.add('hide')
     return response
   } catch (error) {
     const message = `The following error message was returned: ${error}`
     console.log(message)
+    QS(document, '.progress').classList.add('hide')
     return message
   }
 }
@@ -153,3 +159,15 @@ function commentSubmit (e) {
   comment.textContent = render
   commentList.parentElement.insertBefore(comment, commentList)
 }
+
+async function initializer () {
+  const data = await fetchJSON('/api/github/user')
+  console.log(data)
+  if (data.message !== 'Bad credentials') {
+    QS(QS(document, '#for'), 'input').value = data.login
+    QS(document, '#for').dispatchEvent(new Event('submit'))
+    QS(QS(document, '#for'), 'input').value = ''
+  }
+}
+
+initializer()
