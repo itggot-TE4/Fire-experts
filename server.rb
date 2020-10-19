@@ -16,16 +16,16 @@ class Server < Sinatra::Base
     @client_id = ENV['GH_BASIC_CLIENT_ID']
     slim :index
   end
-  # Calls the get route with your Username and token key, 
-  # then gets the name from the input field in the 
-  # headerfield and makes a request to the github api to find the repository 
+  # Calls the get route with your Username and token key,
+  # then gets the name from the input field in the
+  # headerfield and makes a request to the github api to find the repository
   get '/api/github/:name/repos' do
     call_gh_api("https://api.github.com/users/#{params['name']}/repos").body
   end
-  # Calls the get route with your Username and token key, 
-  # then gets the name from the input field in the 
+  # Calls the get route with your Username and token key,
+  # then gets the name from the input field in the
   # headerfield and makes a request to the github api to find the repository, and then
-  # looks for existing forks bounded to the github username.  
+  # looks for existing forks bounded to the github username.
   get '/api/github/:name/:repo/forks' do
     call_gh_api("https://api.github.com/repos/#{params['name']}/" \
               "#{params['repo']}/forks").body
