@@ -31,3 +31,7 @@ h3 {
 .progress {
   margin-top: -1.5em !important;
 }
+
+.disabled-card {
+  background: rgba(109, 105, 105, 0.150) !important;
+}
