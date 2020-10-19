@@ -184,7 +184,6 @@ async function getCodeSnippet (forkFullName, branch = 'master') {
   const codeSnippetPromise = await fetch(`https://raw.githubusercontent.com/${forkFullName}/${branch}/${manifest.filePath}`)
   const codeSnippet = await codeSnippetPromise.text()
   codeSnippet.trim()
-  codeSnippet.trim()
 
   return codeSnippet
 }
