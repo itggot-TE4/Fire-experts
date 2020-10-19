@@ -60,12 +60,23 @@ function generateRepoCards (repoList) {
     const repoForks = QS(card, '.repoForks')
     repoForks.setAttribute('data-repo-full-name', repo.fullName)
     repoForks.addEventListener('click', showForks)
+    verifyRepoManifest(card, repo.fullName)
+
     QS(card, '.repoName').textContent = repo.name
     QS(card, '.repoGHLink').href = repo.GHLink
     QS(card, '.repoNumberOfForks').textContent = repo.numberOfForks
     cardList.push(card)
   })
   return cardList
+}
+
+// Given a card it verifies if the card contains a .manifest.json file and
+// adds a disabled-card class if there is no file in the repo
+async function verifyRepoManifest (card, fullName) {
+  const manifest = await getManifest(fullName)
+  if (manifest.includes('The following error message was returned')) {
+    card.classList.add('disabled-card')
+  }
 }
 
 async function showForks (e) {
