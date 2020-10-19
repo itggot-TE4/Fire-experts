@@ -1,5 +1,7 @@
+// Adds an eventlistener to the header, allowing the user to search for a GitHub user
 QS(document, '#for').addEventListener('submit', headerFormSubmit)
 
+// Shows the user a list of all public repositories belonging to the user they searched for
 async function headerFormSubmit (e) {
   e.preventDefault()
   const input = e.target.querySelector('input').value
@@ -17,27 +19,34 @@ async function headerFormSubmit (e) {
   appendToWrapper(repoCards)
 }
 
+// A helper for quicker use of querySelector()
 function QS (element, target) {
   return element.querySelector(target)
 }
 
+// A helper for quicker use of querySelectorAll()
 // function QSA (element, target) {
 //   return element.querySelectorAll(target)
 // }
 
+// Creates a clone from a template specified in document
+// templateContent is a container inside the template which contains all of the content
 function cloneTemplate (templateID, templateContent) {
   const template = QS(document, templateID)
   const clone = template.content.cloneNode(true)
   return QS(clone, templateContent)
 }
 
+// Clears all content from the wrapper
 function resetWrapper () { QS(document, '.wrapper').innerHTML = '' }
 
+// Appends a list of elements to the "wrapper"-element
 function appendToWrapper (listOfElements) {
   const wrapper = QS(document, '.wrapper')
   listOfElements.forEach(element => { wrapper.appendChild(element) })
 }
 
+// Parses data returned by the GitHub API into a JS object for use in generateRepoCards()
 function parseRepoData (repoData) {
   const parsedData = []
   repoData.forEach(repo => {
@@ -52,6 +61,7 @@ function parseRepoData (repoData) {
   return parsedData
 }
 
+// Generates card for every public repository belonging to a previously determined user (needs input from parseRepoData())
 function generateRepoCards (repoList) {
   const cardTemplate = cloneTemplate('#repoCardTemplate', '.card')
   const cardList = []
@@ -79,12 +89,15 @@ async function verifyRepoManifest (card, fullName) {
   }
 }
 
+// shows all forks for a given GitHub repository
 async function showForks (e) {
   const fullName = e.target.getAttribute('data-repo-full-name')
   const data = await getForks(fullName)
   forkCards(data)
 }
 
+// Fetches and parses JSON data from a given URL
+// If this fails, it logs an error message in the console
 async function fetchJSON (url) {
   QS(document, '.progress').classList.remove('hide')
   try {
@@ -106,8 +119,10 @@ async function fetchJSON (url) {
   }
 }
 
+// Gets all public GitHub repositories for a given user
 async function getRepos (userName) { return await fetchJSON(`/api/github/${userName}/repos`) }
 
+// Gets all forks from a given GitHub users repository
 async function getForks (userRepo) { return await fetchJSON(`/api/github/${userRepo}/forks`) }
 
 // takes a forkCard that has been run through renderForkCardContent and appends it to the wrapper
@@ -168,12 +183,15 @@ async function forkCards (forkList) {
   })
 }
 
+// Gets .manifest.json from a given fork
 async function getManifest (forkFullName, branch = 'master') {
   return await fetchJSON(`https://raw.githubusercontent.com/${forkFullName}/${branch}/.manifest.json`)
 }
 
+// Fetches a codeSnippet for a given fork
 async function getCodeSnippet (forkFullName, branch = 'master') {
   const manifest = await getManifest(forkFullName)
+  // Gets the raw file content from a path provided in .manifest.json
   const codeSnippetPromise = await fetch(`https://raw.githubusercontent.com/${forkFullName}/${branch}/${manifest.filePath}`)
   const codeSnippet = await codeSnippetPromise.text()
   codeSnippet.trim()
@@ -181,6 +199,7 @@ async function getCodeSnippet (forkFullName, branch = 'master') {
   return codeSnippet
 }
 
+// Loads syntax highlighting for a card's codeSnippet using hljs (https://highlightjs.org/usage/)
 function loadSyntaxHighlighting (card) {
   // eslint-disable-next-line no-undef
   hljs.highlightBlock(card)
