@@ -69,7 +69,7 @@ function generateRepoCards (repoList) {
 async function showForks (e) {
   const fullName = e.target.getAttribute('data-repo-full-name')
   const data = await getForks(fullName)
-  renderForkCards(data)
+  forkCards(data)
 }
 
 async function fetchJSON (url) {
@@ -93,21 +93,27 @@ async function getRepos (userName) { return await fetchJSON(`/api/github/${userN
 
 async function getForks (userRepo) { return await fetchJSON(`/api/github/${userRepo}/forks`) }
 
-function loadForkCard (forkCard) {
+// takes a forkCard that has been run through renderForkCardContent and appends it to the wrapper
+// also highlights the syntax of any present codeSnippet
+function renderForkCard (forkCard) {
   appendToWrapper([forkCard])
   loadSyntaxHighlighting(QS(forkCard, 'pre code'))
 }
 
+// renders the content inside a forkCard
 function renderForkCardContent (cardTemplate, forkData, manifest, codeSnippet) {
   QS(cardTemplate, 'h3').textContent = forkData.full_name
   QS(cardTemplate, 'code').textContent = codeSnippet
+  renderForkCardTestResults(cardTemplate)
   QS(cardTemplate, 'code').classList.add(manifest.language)
   QS(cardTemplate, '.forkGHLink').href = forkData.html_url
   QS(cardTemplate, 'form').addEventListener('submit', commentSubmit)
 }
 
+// generates forkCard test results
 function generateForkCardTestResults (_manifest, _codeSnippet) {
   const testResults = []
+  // generates mockup test results
   for (let i = 0; i < 3; i++) {
     const testResult = document.createElement('p')
     testResult.textContent = `fake test result number ${i}`
@@ -116,6 +122,7 @@ function generateForkCardTestResults (_manifest, _codeSnippet) {
   return testResults
 }
 
+// renders forkCard test results inside a given forkCard
 function renderForkCardTestResults (card, _manifest, _codeSnippet) {
   const testResults = generateForkCardTestResults(_manifest, _codeSnippet)
   testResults.forEach(testResult => {
@@ -123,20 +130,23 @@ function renderForkCardTestResults (card, _manifest, _codeSnippet) {
   })
 }
 
-async function renderForkCards (forkList) {
+// resets wrapper and then generates and renders forkCards from a list of forks from a GitHub repository
+async function forkCards (forkList) {
   resetWrapper()
   const cardTemplate = cloneTemplate('#forkCardTemplate', '.card')
+  // asynchroically renders each forkCard
   await forkList.forEach(async fork => {
     const card = cardTemplate.cloneNode(true)
+    // gets .manifest.json
     const manifest = await getManifest(fork.full_name, fork.default_branch)
+    // gets code from file specified in .manifest.json
     let codeSnippet = await getCodeSnippet(fork.full_name, fork.default_branch)
     if (typeof manifest.language === 'string' || typeof manifest.filePath === 'string') {
       if (codeSnippet === '404: Not Found') {
         codeSnippet = 'No code here!\nThe given manifest.filePath returned no file.'
       }
-      renderForkCardTestResults(card)
       renderForkCardContent(card, fork, manifest, codeSnippet)
-      loadForkCard(card)
+      renderForkCard(card)
     }
   })
 }
