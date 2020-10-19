@@ -136,27 +136,52 @@ function renderForkCard (forkCard) {
 function renderForkCardContent (cardTemplate, forkData, manifest, codeSnippet) {
   QS(cardTemplate, 'h3').textContent = forkData.full_name
   QS(cardTemplate, 'code').textContent = codeSnippet
-  renderForkCardTestResults(cardTemplate)
+  renderForkCardTestResults(cardTemplate, manifest, codeSnippet)
   QS(cardTemplate, 'code').classList.add(manifest.language)
   QS(cardTemplate, '.forkGHLink').href = forkData.html_url
   QS(cardTemplate, 'form').addEventListener('submit', commentSubmit)
 }
 
-// generates forkCard test results
-function generateForkCardTestResults (_manifest, _codeSnippet) {
-  const testResults = []
-  // generates mockup test results
-  for (let i = 0; i < 3; i++) {
-    const testResult = document.createElement('p')
-    testResult.textContent = `fake test result number ${i}`
-    testResults.push(testResult)
-  }
-  return testResults
+// generates forkCard test results as a list of iframes
+function generateForkCardTestResults (manifest, codeSnippet) {
+  let list = []
+  manifest.tests.forEach (e => {
+    for(let i = 0; i <e.arguments.length; i += 2) {
+      list.push(`<script>
+      let str;
+      if(${manifest.functionName}(${e.arguments[i]}, ${e.arguments[i+1]}) == ${e.expected}){
+        str = "passed"; 
+      } else {
+        str = "failed";
+      };
+      document.querySelector('body').innerHTML = "Test ${e.description}: " + str</script>`)
+    }
+  })
+  let iframes = []
+  list.forEach( (e) => {
+    const ifrm = document.createElement('iframe')
+    let html = `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+    </head>
+    <body>
+      <script>${codeSnippet}</script>
+      ${e}
+    </body>
+    </html>`
+    ifrm.setAttribute('srcdoc', html)
+    iframes.push(ifrm)
+  })
+  console.log(iframes)
+  return iframes
 }
 
 // renders forkCard test results inside a given forkCard
-function renderForkCardTestResults (card, _manifest, _codeSnippet) {
-  const testResults = generateForkCardTestResults(_manifest, _codeSnippet)
+function renderForkCardTestResults (card, manifest, codeSnippet) {
+  const testResults = generateForkCardTestResults(manifest, codeSnippet)
   testResults.forEach(testResult => {
     QS(card, '.testResults').appendChild(testResult)
   })

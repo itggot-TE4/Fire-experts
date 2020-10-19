@@ -35,3 +35,9 @@ h3 {
 .disabled-card {
   background: rgba(109, 105, 105, 0.150) !important;
 }
+
+iframe {
+  height: calc(1em + 23px);
+  overflow: auto;
+  border: 0;
+}
