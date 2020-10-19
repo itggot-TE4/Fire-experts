@@ -30,7 +30,8 @@ class Server < Sinatra::Base
     call_gh_api("https://api.github.com/repos/#{params['name']}/" \
               "#{params['repo']}/forks").body
   end
-
+  # A get route that gets the users "github username" and then uses it for the resquest to get
+  # the repositorys from the "Username"
   get '/api/github/user' do
     response = call_gh_api('https://api.github.com/user')
     if response.parsed_response == response.body
@@ -40,7 +41,7 @@ class Server < Sinatra::Base
       response.body
     end
   end
-
+  # Handles githubs callback.
   get '/callback' do
     begin
       # get temporary GitHub code...
@@ -67,6 +68,7 @@ class Server < Sinatra::Base
     HTTParty.get(url, headers: { 'Authorization' => auth })
   end
 
+  # A function that checks if the user is authorized.
   def authorized?
     return if session[:access_token]
   end
