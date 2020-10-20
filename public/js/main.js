@@ -143,25 +143,52 @@ function renderForkCardContent (cardTemplate, forkData, manifest, codeSnippet) {
 }
 
 // Generates the test functions argument list as a string
-function generateTestFunctionArguments(arguments) {
+function generateTestFunctionArguments (args) {
   let str = ''
-  arguments.forEach( (e) => {
-    str+= `${e}, `
+  args.forEach((e) => {
+    str += `${e}, `
   })
-  return str.substring(0, str.lastIndexOf(','));
+  return str.substring(0, str.lastIndexOf(','))
 }
 
 // generates forkCard test results as a list of iframes
 function generateForkCardTestResults (manifest, codeSnippet) {
   if (manifest.language.toLowerCase() !== 'javascript') {
-    let x = document.createElement('p')
+    const x = document.createElement('p')
     x.textContent = 'Unsupported language'
     return [x]
   }
+  const list = generateForkCardTestScript(manifest)
+  const iframes = generateForkCardTestBody(list, codeSnippet)
+  return iframes
+}
 
-  let list = []
-  manifest.tests.forEach (e => {
-    for(let i = 0; i < e.arguments.length; i += e.arguments[0].length) {
+function generateForkCardTestBody (list, codeSnippet) {
+  const iframes = []
+  list.forEach((e) => {
+    const ifrm = document.createElement('iframe')
+    const html = `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+    </head>
+    <body>
+      <script>${codeSnippet}</script>
+      ${e}
+    </body>
+    </html>`
+    ifrm.setAttribute('srcdoc', html)
+    iframes.push(ifrm)
+  })
+  return iframes
+}
+
+function generateForkCardTestScript (manifest) {
+  const list = []
+  manifest.tests.forEach(e => {
+    for (let i = 0; i < e.arguments.length; i += e.arguments[0].length) {
       list.push(`<script>
       let str;
       try {
@@ -177,26 +204,7 @@ function generateForkCardTestResults (manifest, codeSnippet) {
       </script>`)
     }
   })
-  let iframes = []
-  list.forEach( (e) => {
-    const ifrm = document.createElement('iframe')
-    let html = `<!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Document</title>
-    </head>
-    <body>
-      <script>${codeSnippet}</script>
-      ${e}
-    </body>
-    </html>`
-    ifrm.setAttribute('srcdoc', html)
-    iframes.push(ifrm)
-  })
-  console.log(iframes)
-  return iframes
+  return list
 }
 
 // renders forkCard test results inside a given forkCard
