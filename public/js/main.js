@@ -258,7 +258,7 @@ async function forkCards (forkList, repoName) {
 
 // Gets all comments for all forks of a given repository
 async function getForkCardsComment (repoName) {
-  return await fetchJSON(`http://localhost:9292/api/comments/${repoName}`)
+  return await fetchJSON(`/api/comments/${repoName}`)
 }
 
 // Gets .manifest.json from a given fork
@@ -298,7 +298,7 @@ function forkFormSubmit (e) {
   if (comment.length === 0) {
     comment = 'No comment'
   }
-  fetch(`http://localhost:9292/api/update_comment/${fullName}/${comment}/${radioBtn}`, { method: 'PATCH' })
+  fetch(`/api/update_comment/${fullName}/${comment}/${radioBtn}`, { method: 'PATCH' })
 }
 
 async function initializer () {
