@@ -148,7 +148,6 @@ function renderForkCardContent (cardTemplate, forkData, manifest, codeSnippet, f
 function renderForkCardComment (form, forkData, forkComments) {
   forkComments.forEach(comment => {
     if (forkData.full_name === comment.full_name) {
-      // hasComment = true
       QS(form, '.forkcomment').value = comment.comment
       QSA(form, '[name="forkRadio"]').forEach(radioBtn => {
         if (radioBtn.value.toString() === comment.graded.toString()) {
