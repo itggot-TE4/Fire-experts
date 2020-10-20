@@ -299,7 +299,8 @@ function forkFormSubmit (e) {
   if (comment.length === 0) {
     comment = 'No comment'
   }
-  fetch(`/api/update_comment/${fullName}/${comment}/${radioBtn}`, { method: 'PATCH' })
+  comment = new URLSearchParams({ comment: comment }).toString()
+  fetch(`/api/update_comment/${fullName}/${radioBtn}/${comment}`, { method: 'PATCH' })
 }
 
 async function initializer () {

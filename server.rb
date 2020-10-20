@@ -70,27 +70,13 @@ class Server < Sinatra::Base
   end
 
   # Updates or creates a comment on a given fork of a given GitHub repository
-  patch '/api/update_comment/:name/:repo/:comment/:graded' do
+  patch '/api/update_comment/:name/:repo/:graded/*' do
+    protocol = params[:splat].first
+    address = params[:splat][1..-1].join('/')
+    url = protocol + address
     Fork.save_comment do
       { full_name: "#{params['name']}/#{params['repo']}",
-        comment: params['comment'],
-        graded: params['graded'].to_i,
-        parent_repo: params['repo'] }
-    end
-  end
-
-  # Gets all comments for a specific GitHub repository
-  # params['users'] is an unused input
-  get '/api/comments/:user/:repo' do
-    comments = Fork.all_where { { where: 'parent_repo', condition: params['repo'] } }
-    return comments.to_json
-  end
-
-  # Updates or creates a comment on a given fork of a given GitHub repository
-  patch '/api/update_comment/:name/:repo/:comment/:graded' do
-    Fork.save_comment do
-      { full_name: "#{params['name']}/#{params['repo']}",
-        comment: params['comment'],
+        comment: url.sub('comment=', ''),
         graded: params['graded'].to_i,
         parent_repo: params['repo'] }
     end
