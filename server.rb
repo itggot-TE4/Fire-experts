@@ -4,6 +4,8 @@ require 'dotenv'
 require 'sinatra'
 require 'httparty'
 
+require_relative 'modules/dbhandler'
+
 Dotenv.load
 
 # Webserver handler
@@ -44,21 +46,39 @@ class Server < Sinatra::Base
   end
   # Handles githubs callback.
   get '/callback' do
-    begin
-      # get temporary GitHub code...
-      session_code = request.env['rack.request.query_hash']['code']
-      # ... and POST it back to GitHub
-      result = HTTParty.post('https://github.com/login/oauth/access_token',
-                             { body:
-                               { client_id: ENV['GH_BASIC_CLIENT_ID'],
-                                 client_secret: ENV['GH_BASIC_SECRET_ID'],
-                                 code: session_code },
-                               headers: { accept: 'application/json' } })
-      session[:access_token] = JSON.parse(result.body)['access_token']
-    rescue StandardError
-      session[:access_token] = nil
-    ensure
-      redirect '/'
+    # get temporary GitHub code...
+    session_code = request.env['rack.request.query_hash']['code']
+    # ... and POST it back to GitHub
+    result = HTTParty.post('https://github.com/login/oauth/access_token',
+                           { body:
+                             { client_id: ENV['GH_BASIC_CLIENT_ID'],
+                               client_secret: ENV['GH_BASIC_SECRET_ID'],
+                               code: session_code },
+                             headers: { accept: 'application/json' } })
+    session[:access_token] = JSON.parse(result.body)['access_token']
+  rescue StandardError
+    session[:access_token] = nil
+  ensure
+    redirect '/'
+  end
+
+  # Gets all comments for a specific GitHub repository
+  # params['users'] is an unused input
+  get '/api/comments/:user/:repo' do
+    comments = Fork.all_where { { where: 'parent_repo', condition: params['repo'] } }
+    return comments.to_json
+  end
+
+  # Updates or creates a comment on a given fork of a given GitHub repository
+  patch '/api/update_comment/:name/:repo/:graded/*' do
+    protocol = params[:splat].first
+    address = params[:splat][1..].join('/')
+    url = protocol + address
+    Fork.save_comment do
+      { full_name: "#{params['name']}/#{params['repo']}",
+        comment: url.sub('comment=', ''),
+        graded: params['graded'].to_i,
+        parent_repo: params['repo'] }
     end
   end
 

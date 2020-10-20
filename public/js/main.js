@@ -25,9 +25,9 @@ function QS (element, target) {
 }
 
 // A helper for quicker use of querySelectorAll()
-// function QSA (element, target) {
-//   return element.querySelectorAll(target)
-// }
+function QSA (element, target) {
+  return element.querySelectorAll(target)
+}
 
 // Creates a clone from a template specified in document
 // templateContent is a container inside the template which contains all of the content
@@ -93,7 +93,7 @@ async function verifyRepoManifest (card, fullName) {
 async function showForks (e) {
   const fullName = e.target.getAttribute('data-repo-full-name')
   const data = await getForks(fullName)
-  forkCards(data)
+  forkCards(data, fullName)
 }
 
 // Fetches and parses JSON data from a given URL
@@ -133,13 +133,29 @@ function renderForkCard (forkCard) {
 }
 
 // renders the content inside a forkCard
-function renderForkCardContent (cardTemplate, forkData, manifest, codeSnippet) {
+function renderForkCardContent (cardTemplate, forkData, manifest, codeSnippet, forkComments) {
+  const form = QS(cardTemplate, 'form')
   QS(cardTemplate, 'h3').textContent = forkData.full_name
   QS(cardTemplate, 'code').textContent = codeSnippet
   renderForkCardTestResults(cardTemplate, manifest, codeSnippet)
   QS(cardTemplate, 'code').classList.add(manifest.language)
   QS(cardTemplate, '.forkGHLink').href = forkData.html_url
-  QS(cardTemplate, 'form').addEventListener('submit', commentSubmit)
+  renderForkCardComment(form, forkData, forkComments)
+  form.addEventListener('submit', forkFormSubmit)
+}
+
+// Finds the fork corresponding to every comment in a list retrieved from the database
+function renderForkCardComment (form, forkData, forkComments) {
+  forkComments.forEach(comment => {
+    if (forkData.full_name === comment.full_name) {
+      QS(form, '.forkcomment').value = comment.comment
+      QSA(form, '[name="forkRadio"]').forEach(radioBtn => {
+        if (radioBtn.value.toString() === comment.graded.toString()) {
+          radioBtn.checked = true
+        }
+      })
+    }
+  })
 }
 
 // Generates the test functions argument list as a string
@@ -218,9 +234,10 @@ function renderForkCardTestResults (card, manifest, codeSnippet) {
 }
 
 // resets wrapper and then generates and renders forkCards from a list of forks from a GitHub repository
-async function forkCards (forkList) {
+async function forkCards (forkList, repoName) {
   resetWrapper()
   const cardTemplate = cloneTemplate('#forkCardTemplate', '.card')
+  const forkComments = await getForkCardsComment(repoName)
   // asynchroically renders each forkCard
   await forkList.forEach(async fork => {
     const card = cardTemplate.cloneNode(true)
@@ -232,10 +249,15 @@ async function forkCards (forkList) {
       if (codeSnippet === '404: Not Found') {
         codeSnippet = 'No code here!\nThe given manifest.filePath returned no file.'
       }
-      renderForkCardContent(card, fork, manifest, codeSnippet)
+      renderForkCardContent(card, fork, manifest, codeSnippet, forkComments)
       renderForkCard(card)
     }
   })
+}
+
+// Gets all comments for all forks of a given repository
+async function getForkCardsComment (repoName) {
+  return await fetchJSON(`/api/comments/${repoName}`)
 }
 
 // Gets .manifest.json from a given fork
@@ -260,16 +282,23 @@ function loadSyntaxHighlighting (card) {
   hljs.highlightBlock(card)
 }
 
-// A function that takes the target element and appends it to the comment section
-function commentSubmit (e) {
-  const commentList = e.target.parentElement.querySelector('.forkform')
+// A function that submits all form data for a given fork to the server for storage in database
+function forkFormSubmit (e) {
   e.preventDefault()
-  const com = QS(e.target, 'input').value
-  localStorage.setItem('comment', com)
-  const render = localStorage.getItem('comment')
-  const comment = document.createElement('p')
-  comment.textContent = render
-  commentList.parentElement.insertBefore(comment, commentList)
+  let comment = e.target.parentElement.querySelector('.forkcomment').value
+  const radioBtns = e.target.parentElement.querySelectorAll('[name="forkRadio"]')
+  let radioBtn = null
+  const fullName = QS(e.target.parentElement, 'h3').textContent
+  radioBtns.forEach(btn => {
+    if (btn.checked) {
+      radioBtn = btn.value
+    }
+  })
+  if (comment.length === 0) {
+    comment = 'No comment'
+  }
+  comment = new URLSearchParams({ comment: comment }).toString()
+  fetch(`/api/update_comment/${fullName}/${radioBtn}/${comment}`, { method: 'PATCH' })
 }
 
 async function initializer () {
