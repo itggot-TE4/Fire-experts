@@ -13,7 +13,7 @@ jobs:
     - name: Run all acceptance tests
       run: |
         bundle install
-        rake run
+        rake test
 
   lint:
     runs-on: ubuntu-latest
