@@ -163,6 +163,7 @@ function generateForkCardTestResults (manifest, codeSnippet) {
   return iframes
 }
 
+// Generates a list of iframes in witch the test result are rendered
 function generateForkCardTestBody (list, codeSnippet) {
   const iframes = []
   list.forEach((e) => {
@@ -185,6 +186,7 @@ function generateForkCardTestBody (list, codeSnippet) {
   return iframes
 }
 
+// Genereates the script tag that runs the tests and appends the result to body
 function generateForkCardTestScript (manifest) {
   const list = []
   manifest.tests.forEach(e => {
