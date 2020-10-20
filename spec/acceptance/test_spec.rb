@@ -33,6 +33,7 @@ class TeacherOMatic < Minitest::Spec
 
   it 'Has welcome text' do
     assert page.has_content? 'Welcome to Teacher-O-Matic!'
-    assert page.has_content? 'Sign-in using the GitHub button in the header field'
+    assert page.has_content? 'Sign-in using the GitHub button in the '\
+                             'header field'
   end
 end
