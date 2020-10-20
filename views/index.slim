@@ -29,20 +29,18 @@ template#forkCardTemplate
       a.forkGHLink href=""  Show on GithHub
       .testResults
     form.forkform.container action="#" 
-      input.forkcomment placeholder="Comment" type="text" /
-      button type="submit"  Submit Comment
-    form.radioform action="#" 
+      input.forkcomment placeholder="Comment" type="text" name="comment"/
       p
         label
-          input#done name="forkRadio" type="radio" /
+          input#done name="forkRadio" type="radio" value="1"/
           span Done
       p
         label
-          input#reviewNeeded name="forkRadio" type="radio" /
+          input#reviewNeeded name="forkRadio" type="radio" value="2"/
           span Needs Change
       p
         label
-          input#notReviewed checked="" name="forkRadio" type="radio" /
+          input#notReviewed name="forkRadio" type="radio" value="3"/
           span Not reviewed
       button.waves-effect.waves-light.btn-small type="submit"  Save
 script src="./js/main.js" 

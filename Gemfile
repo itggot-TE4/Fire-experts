@@ -6,7 +6,7 @@ gem 'dotenv'
 gem 'httparty'
 gem 'sinatra'
 gem 'slim'
-
+gem 'sqlite3'
 gem 'capybara', '>=3.29'
 gem 'minitest'
 gem 'minitest-reporters'
