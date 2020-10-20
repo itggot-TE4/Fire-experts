@@ -26,12 +26,6 @@ class Input
             
         end
         
-        # puts '#----------#'
-        # puts ''
-        # p hash
-        # puts ''
-        # puts '#----------#'
-        
         return hash
         
     end
@@ -193,16 +187,6 @@ class DBhandler < Input
         columns = Input.list_to_string(input[:insertion].keys)
         
         values = Input.list_to_string(input[:insertion])
-        
-        # puts '------'
-        # puts ''
-        # p columns
-        # puts ''
-        # puts '------'
-        # puts ''
-        # p values
-        # puts ''
-        # puts '------'
         
         if input[:nondefault_table] != nil
             
