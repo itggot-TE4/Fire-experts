@@ -72,7 +72,7 @@ class Server < Sinatra::Base
   # Updates or creates a comment on a given fork of a given GitHub repository
   patch '/api/update_comment/:name/:repo/:graded/*' do
     protocol = params[:splat].first
-    address = params[:splat][1..-1].join('/')
+    address = params[:splat][1..].join('/')
     url = protocol + address
     Fork.save_comment do
       { full_name: "#{params['name']}/#{params['repo']}",
