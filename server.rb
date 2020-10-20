@@ -79,6 +79,22 @@ class Server < Sinatra::Base
     end
   end
 
+  # Gets all comments for a specific GitHub repository
+  # params['users'] is an unused input
+  get '/api/comments/:user/:repo' do
+
+    comments = Fork.get_all_where do {:where => "parent_repo", :condition => params['repo']} end
+    return comments.to_json
+
+  end
+
+  # Updates or creates a comment on a given fork of a given GitHub repository
+  patch '/api/update_comment/:name/:repo/:comment/:graded' do
+
+    Fork.save_comment do {:full_name => "#{params['name']}/#{params['repo']}", :comment => params['comment'], :graded => params['graded'].to_i, :parent_repo => params['repo']} end
+
+  end
+
   # A function that gets and authorizes your username and key from the ENV file,
   # for using the github API, and it's using httpparty as fetching.
   def call_gh_api(url)
