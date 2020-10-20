@@ -8,8 +8,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v1
-    - name: Setup Ruby, JRuby and TruffleRuby
-      uses: ruby/setup-ruby@v1.47.0
+    - name: Setup Ruby
+      uses: actions/setup-ruby@v1
     - name: Run all acceptance tests
       run: |
         bundle install
