@@ -3,15 +3,18 @@ name: tests
 on: [push]
 
 jobs:
-  unit-tests:
+  acceptance-tests:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Run all unit tests
+    - name: Checkout
+      uses: actions/checkout@v1.1.2
+    - name: Set up Ruby
+      uses: actions/setup-ruby@v1
+    - name: Run all acceptance tests
       run: |
-        echo Run test
-        # npm install
-        # npm run test
+        bundle install
+        rake run
+
   lint:
     runs-on: ubuntu-latest
     steps:
