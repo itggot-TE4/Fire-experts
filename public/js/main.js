@@ -136,27 +136,82 @@ function renderForkCard (forkCard) {
 function renderForkCardContent (cardTemplate, forkData, manifest, codeSnippet) {
   QS(cardTemplate, 'h3').textContent = forkData.full_name
   QS(cardTemplate, 'code').textContent = codeSnippet
-  renderForkCardTestResults(cardTemplate)
+  renderForkCardTestResults(cardTemplate, manifest, codeSnippet)
   QS(cardTemplate, 'code').classList.add(manifest.language)
   QS(cardTemplate, '.forkGHLink').href = forkData.html_url
   QS(cardTemplate, 'form').addEventListener('submit', commentSubmit)
 }
 
-// generates forkCard test results
-function generateForkCardTestResults (_manifest, _codeSnippet) {
-  const testResults = []
-  // generates mockup test results
-  for (let i = 0; i < 3; i++) {
-    const testResult = document.createElement('p')
-    testResult.textContent = `fake test result number ${i}`
-    testResults.push(testResult)
+// Generates the test functions argument list as a string
+function generateTestFunctionArguments (args) {
+  let str = ''
+  args.forEach((e) => {
+    str += `${e}, `
+  })
+  return str.substring(0, str.lastIndexOf(','))
+}
+
+// generates forkCard test results as a list of iframes
+function generateForkCardTestResults (manifest, codeSnippet) {
+  if (manifest.language.toLowerCase() !== 'javascript') {
+    const x = document.createElement('p')
+    x.textContent = 'Unsupported language'
+    return [x]
   }
-  return testResults
+  const list = generateForkCardTestScript(manifest)
+  const iframes = generateForkCardTestBody(list, codeSnippet)
+  return iframes
+}
+
+// Generates a list of iframes in witch the test result are rendered
+function generateForkCardTestBody (list, codeSnippet) {
+  const iframes = []
+  list.forEach((e) => {
+    const ifrm = document.createElement('iframe')
+    const html = `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+    </head>
+    <body>
+      <script>${codeSnippet}</script>
+      ${e}
+    </body>
+    </html>`
+    ifrm.setAttribute('srcdoc', html)
+    iframes.push(ifrm)
+  })
+  return iframes
+}
+
+// Genereates the script tag that runs the tests and appends the result to body
+function generateForkCardTestScript (manifest) {
+  const list = []
+  manifest.tests.forEach(e => {
+    for (let i = 0; i < e.arguments.length; i += e.arguments[0].length) {
+      list.push(`<script>
+      let str;
+      try {
+        if(${manifest.functionName}(${generateTestFunctionArguments(e.arguments)}) == ${e.expected}){
+          str = "passed"; 
+        } else {
+          str = "failed";
+        };
+      } catch {
+        str = "failed";
+      }
+      document.querySelector('body').innerHTML = "Test ${e.description}: " + str
+      </script>`)
+    }
+  })
+  return list
 }
 
 // renders forkCard test results inside a given forkCard
-function renderForkCardTestResults (card, _manifest, _codeSnippet) {
-  const testResults = generateForkCardTestResults(_manifest, _codeSnippet)
+function renderForkCardTestResults (card, manifest, codeSnippet) {
+  const testResults = generateForkCardTestResults(manifest, codeSnippet)
   testResults.forEach(testResult => {
     QS(card, '.testResults').appendChild(testResult)
   })
