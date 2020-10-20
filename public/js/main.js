@@ -142,19 +142,39 @@ function renderForkCardContent (cardTemplate, forkData, manifest, codeSnippet) {
   QS(cardTemplate, 'form').addEventListener('submit', commentSubmit)
 }
 
+// Generates the test functions argument list as a string
+function generateTestFunctionArguments(arguments) {
+  let str = ''
+  arguments.forEach( (e) => {
+    str+= `${e}, `
+  })
+  return str.substring(0, str.lastIndexOf(','));
+}
+
 // generates forkCard test results as a list of iframes
 function generateForkCardTestResults (manifest, codeSnippet) {
+  if (manifest.language.toLowerCase() !== 'javascript') {
+    let x = document.createElement('p')
+    x.textContent = 'Unsupported language'
+    return [x]
+  }
+
   let list = []
   manifest.tests.forEach (e => {
-    for(let i = 0; i <e.arguments.length; i += 2) {
+    for(let i = 0; i < e.arguments.length; i += e.arguments[0].length) {
       list.push(`<script>
       let str;
-      if(${manifest.functionName}(${e.arguments[i]}, ${e.arguments[i+1]}) == ${e.expected}){
-        str = "passed"; 
-      } else {
+      try {
+        if(${manifest.functionName}(${generateTestFunctionArguments(e.arguments)}) == ${e.expected}){
+          str = "passed"; 
+        } else {
+          str = "failed";
+        };
+      } catch {
         str = "failed";
-      };
-      document.querySelector('body').innerHTML = "Test ${e.description}: " + str</script>`)
+      }
+      document.querySelector('body').innerHTML = "Test ${e.description}: " + str
+      </script>`)
     }
   })
   let iframes = []
