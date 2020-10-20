@@ -140,10 +140,16 @@ function renderForkCardContent (cardTemplate, forkData, manifest, codeSnippet, f
   renderForkCardTestResults(cardTemplate, manifest, codeSnippet)
   QS(cardTemplate, 'code').classList.add(manifest.language)
   QS(cardTemplate, '.forkGHLink').href = forkData.html_url
-  let hasComment = false
+  renderForkCardComment(form, forkData, forkComments)
+  form.addEventListener('submit', forkFormSubmit)
+}
+
+// Finds the fork corresponding to every comment in a list retrieved from the database
+function renderForkCardComment (form, forkData, forkComments) {
+  // let hasComment = false
   forkComments.forEach(comment => {
     if (forkData.full_name === comment.full_name) {
-      hasComment = true
+      // hasComment = true
       QS(form, '.forkcomment').value = comment.comment
       QSA(form, '[name="forkRadio"]').forEach(radioBtn => {
         if (radioBtn.value.toString() === comment.graded.toString()) {
@@ -152,11 +158,6 @@ function renderForkCardContent (cardTemplate, forkData, manifest, codeSnippet, f
       })
     }
   })
-  if (!hasComment) {
-    const radioBtns = QSA(form, '[name="forkRadio"]')
-    radioBtns[radioBtns.length - 1].checked = true
-  }
-  form.addEventListener('submit', forkFormSubmit)
 }
 
 // Generates the test functions argument list as a string
