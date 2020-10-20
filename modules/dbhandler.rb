@@ -1,3 +1,4 @@
+# A base class for handling inputs and custom methods for converting lists
 class Input
 
     # Public: turns an array containing values and array of keys into a hash
@@ -92,6 +93,7 @@ class Input
 
 end
 
+# A class for all methods that interact with the database
 class DBhandler < Input
     
     @table_name = nil
@@ -254,6 +256,7 @@ class DBhandler < Input
     
 end
 
+# An end class which is used to call upon DBhandler methods from server.rb
 class Fork < DBhandler
     
     @table_name = "forks"
