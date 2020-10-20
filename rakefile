@@ -1,0 +1,22 @@
+# frozen_string_literal: true
+
+require 'rake'
+require 'rspec/core/rake_task'
+
+RSpec::Core::RakeTask.new(:spec)
+
+task :test do
+  tests = get_tests_sorted('./spec/acceptance/*_spec.rb')
+  tests.each do |test|
+    # Rake::Task['seed'].invoke # reset db before each test file is run
+    system("bundle exec 'ruby #{test}'")
+  end
+end
+
+def get_tests_sorted(test_folder_path)
+  Dir.glob(test_folder_path).sort_by do |a|
+    basename = File.basename(a)
+    splitted = basename.split('_')
+    splitted.first.to_i
+  end
+end

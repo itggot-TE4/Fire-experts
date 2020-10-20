@@ -11,13 +11,33 @@ h3 {
   font-size: 1.5em !important;
 }
 
-.row .col.s4 {
-  height: 17em !important;
+.repoForks {
+  cursor: pointer;
 }
 
-.repoForks {
-    cursor: pointer;
+.row .col.s6 {
+  padding: 10px !important;
 }
-.row .col.s6{
-    padding: 10px !important;
+
+.github {
+  width: 120px;
+  background-image: url(../img/GitHub_logo.png) !important;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 8px;
+}
+
+.progress {
+  margin-top: -1.5em !important;
+}
+
+.disabled-card {
+  background: rgba(109, 105, 105, 0.150) !important;
+}
+
+iframe {
+  height: calc(1em + 23px);
+  overflow: auto;
+  border: 0;
 }

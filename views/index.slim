@@ -1,0 +1,50 @@
+
+.wrapper.row.container
+  h2.container Welcome to Teacher-O-Matic!
+  p.container Sign-in using the GitHub button in the header field
+template#repoCardTemplate
+  article.card.col.s4
+    table
+      thead
+        tr
+          td
+            h3.repoName
+      tbody
+        tr
+          td.section
+            p.repoForks
+              | Show Forks
+            a.repoGHLink href="" 
+              | Show on GitHub
+          td
+            p.repoNumberOfForks
+template#forkCardTemplate
+  article.card.col.s6
+    .forkCardUpper.container
+      h3
+      .codeSnippet
+        pre
+          code
+            /! code will go here
+      a.forkGHLink href=""  Show on GithHub
+      .testResults
+    form.forkform.container action="#" 
+      input.forkcomment placeholder="Comment" type="text" name="comment"/
+      p
+        label
+          input#done name="forkRadio" type="radio" value="1"/
+          span Done
+      p
+        label
+          input#reviewNeeded name="forkRadio" type="radio" value="2"/
+          span Needs Change
+      p
+        label
+          input#notReviewed checked="" name="forkRadio" type="radio" value="3"/
+          span Not reviewed
+      button.waves-effect.waves-light.btn-small type="submit"  Save
+script src="./js/main.js" 
+/! Compiled and minified JavaScript
+script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" 
+/! hljs-script
+script src="js/highlight.pack.js" 

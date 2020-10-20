@@ -21,19 +21,13 @@
     <br> 
 </p>
 
-## 📝 Table of Contents
+## About
 
-- [About](#about)
-- [Getting Started](#getting_started)
-- [Built Using](#built_using)
-- [Authors](#authors)
-- [Acknowledgments](#acknowledgement)
+The purpose of this project is to help streamline the process for teachers to view, comment, and grade their students' code.
 
-## 🧐 About <a name = "about"></a>
+This is achieved by allowing the teacher to view forks of a GitHub repository containing a ```.manifest.json``` file. The ```.manifest.json``` contains a path to a file which is supposed to be graded, as well as specifications of what language the function(s) is (are) written in and the results from provided tests.
 
-Write about 1-2 paragraphs describing the purpose of your project.
-
-## 🏁 Getting Started <a name = "getting_started"></a>
+## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
@@ -46,57 +40,51 @@ Ruby > 2.6.x
 Node > 14.9.x
 ```
 
-You will also need a GitHub account.
+You will also need a GitHub account to get started.
 
 ### Installing
-To get started do the following
-
-```
-Clone this repository
-```
-
-then run
+Clone this repository and run the following commands:
 
 ```
 $ npm install
+$ bundle install
 ```
 
-and to start the server run 
+To make the application work as inteded you will also need to add a ```.env``` file with the following content.
+Replace XXX with the GitHub OAuth clientID and secret ID as provided when configuring your GitHub [application](https://github.com/settings/developers).
+
+```
+GH_BASIC_CLIENT_ID=xxxxxxxxxxxxxxxxxzxxxxxxxx
+GH_BASIC_SECRET_ID=xxxxxxxxxxxxxxxxxzxxxxxxxx
+```
+
+To start the server run
 
 ```
 $ rackup
 ```
+The server should now be served on port `9292` unless otherwise specified.
 
-The server should now be served on port 9292 unless otherwise specified.
+## Running the tests
 
-To make the application work as inteded you will also need to add a ```.env``` file with the following content.
-Replace XXX with the GitHub accesstoken and your GitHub username
+To run ESlint use ``` npm run lint ``` <br>
+To run test use ``` npm run test ```
 
-```
-GH_ACCESS_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXX
-GH_USER_NAME=XXXXXXXXXXXXX
-```
-
-## 🔧 Running the tests <a name = "tests"></a>
-
-To run ESlint use ```` npm run lint ``` <br>
-To run test use ```` npm run test ```
-
-## ⛏️ Built Using <a name = "built_using"></a>
+## Built Using
 
 - [Sinatra](http://sinatrarb.com/) - Server Framework
 - [VueJs](https://materializecss.com/) - Style, Scripting Framework
 - [NodeJs](https://nodejs.org/en/) - Testing Enviroment
 
-## ✍️ Authors <a name = "authors"></a>
+## Authors
 
 - [@te4-adrian-almetun-smeds](https://github.com/te4-adrian-almetun-smeds)
 - [@te4-andre-skvarc](https://github.com/te4-andre-skvarc)
 - [@te4-david-jensen](https://github.com/te4-david-jensen)
 - [@te4-tintin-wihlborg](https://github.com/te4-tintin-wihlborg)
 
-See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/itggot-TE4/Fire-experts/contributors) who participated in this project.
 
-## 🎉 Acknowledgements <a name = "acknowledgement"></a>
+## Acknowledgements
 
 - Hats off to anyone whose code was used
