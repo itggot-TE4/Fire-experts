@@ -146,7 +146,6 @@ function renderForkCardContent (cardTemplate, forkData, manifest, codeSnippet, f
 
 // Finds the fork corresponding to every comment in a list retrieved from the database
 function renderForkCardComment (form, forkData, forkComments) {
-  // let hasComment = false
   forkComments.forEach(comment => {
     if (forkData.full_name === comment.full_name) {
       // hasComment = true
