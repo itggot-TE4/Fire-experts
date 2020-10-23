@@ -1,5 +1,5 @@
 # this is an example on how to setup CI to generate CC and upload to codeclimate
-name: CI
+name: CC
 
 on:
   push:
@@ -13,8 +13,6 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
-    - name: Checkout master
-      run: git checkout master
     - name: Run the tests with coverage using lcov
       run: |
         echo Generate report
