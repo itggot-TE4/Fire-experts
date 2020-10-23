@@ -282,11 +282,11 @@ async function initializer () {
   }
 }
 
-initializer()
-
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
   module.exports = {
     generateTestFunctionArguments: generateTestFunctionArguments,
     generateForkCardTestScript: generateForkCardTestScript
   }
+} else {
+  initializer()
 }
