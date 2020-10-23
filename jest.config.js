@@ -14,7 +14,7 @@ module.exports = {
   // cacheDirectory: "/private/var/folders/5b/gd2k8tmj0_x22t4qf4xk7x200000gn/T/jest_dx",
 
   // Automatically clear mock calls and instances between every test
-  clearMocks: true
+  clearMocks: true,
 
   // Indicates whether the coverage information should be collected while executing the test
   // collectCoverage: false,
@@ -31,15 +31,15 @@ module.exports = {
   // ],
 
   // Indicates which provider should be used to instrument code for coverage
-  // coverageProvider: "babel",
+  coverageProvider: 'babel',
 
   // A list of reporter names that Jest uses when writing coverage reports
-  // coverageReporters: [
+  coverageReporters: [
   //   "json",
   //   "text",
-  //   "lcov",
+    'lcov'
   //   "clover"
-  // ],
+  ]
 
   // An object that configures minimum threshold enforcement for coverage results
   // coverageThreshold: undefined,
