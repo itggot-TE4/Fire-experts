@@ -1,6 +1,3 @@
-// Adds an eventlistener to the header, allowing the user to search for a GitHub user
-QS(document, '#for').addEventListener('submit', headerFormSubmit)
-
 // Shows the user a list of all public repositories belonging to the user they searched for
 async function headerFormSubmit (e) {
   e.preventDefault()
@@ -273,6 +270,9 @@ function commentSubmit (e) {
 }
 
 async function initializer () {
+  // Adds an eventlistener to the header, allowing the user to search for a GitHub user
+  QS(document, '#for').addEventListener('submit', headerFormSubmit)
+
   const data = await fetchJSON('/api/github/user')
   console.log(data)
   if (data.message !== 'Bad credentials') {
