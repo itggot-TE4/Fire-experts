@@ -1,5 +1,4 @@
-# this is an example on how to setup CI to generate CC and upload to codeclimate
-name: CC
+name: CI
 
 on:
   push:
@@ -8,9 +7,7 @@ on:
 
 jobs:
   cc:
-
     runs-on: ubuntu-latest
-    
     steps:
     - uses: actions/checkout@v1
     - name: Run the tests with coverage using lcov
