@@ -13,6 +13,10 @@
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/itggot-TE4/Fire-experts.svg?style=for-the-badge)](https://github.com/itggot-TE4/Fire-experts/pulls)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)](/LICENSE)
 
+![Code Climate technical debt](https://img.shields.io/codeclimate/tech-debt/itggot-TE4/Fire-experts?style=for-the-badge)
+![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/itggot-TE4/Fire-experts?style=for-the-badge)
+![Code Climate coverage](https://img.shields.io/codeclimate/coverage/itggot-TE4/Fire-experts?style=for-the-badge)
+
 </div>
 
 ---
